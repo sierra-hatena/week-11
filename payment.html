@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembayaran QRIS — NADA KLASIK</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="site-topbar"></div>
+
+  <section class="hero compact">
+    <div class="hero-box">
+      <div class="hero-text">
+        <span class="hero-step-tag">Langkah 3 dari 3 &bull; Pembayaran QRIS</span>
+        <h1>Pembayaran QRIS</h1>
+        <p>Scan kode QRIS di bawah ini atau gunakan Simulator QRIS untuk mengonfirmasi pelunasan secara realtime.</p>
+      </div>
+    </div>
+  </section>
+
+  <main class="page-container narrow">
+    <div id="payment-root"></div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">NADA KLASIK AUDIO STORE</div>
+      <div>Jl. Kemang Raya No. 45, Jakarta Selatan &bull; Buka Selasa - Minggu (10.00 - 20.00 WIB)</div>
+      <div>&copy; 2025 Nada Klasik. Simulasi Pemesanan &amp; Pembayaran QRIS Perangkat Audio Retro.</div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function () {
+      const store = window.NKStore;
+      store.renderTopbar("history");
+
+      const root = document.getElementById("payment-root");
+      const params = new URLSearchParams(window.location.search);
+      let orderId = params.get("order");
+
+      if (!orderId) {
+        const all = store.getOrders();
+        if (all.length > 0) orderId = all[0].id;
+      }
+
+      let lastRenderedStatus = null;
+      let redirectTimer = null;
+      let redirectCountdown = 3;
+
+      function startRedirectCountdown(id) {
+        if (redirectTimer) return;
+        redirectCountdown = 3;
+        const el = document.getElementById("redirect-sec");
+        if (el) el.textContent = String(redirectCountdown);
+
+        redirectTimer = setInterval(function () {
+          redirectCountdown -= 1;
+          const secEl = document.getElementById("redirect-sec");
+          if (secEl) secEl.textContent = String(Math.max(0, redirectCountdown));
+          if (redirectCountdown <= 0) {
+            clearInterval(redirectTimer);
+            redirectTimer = null;
+            window.location.href = "thank-you.html?order=" + encodeURIComponent(id);
+          }
+        }, 1000);
+      }
+
+      function renderPayment(force) {
+        const order = orderId ? store.getOrderById(orderId) : null;
+
+        if (!order) {
+          root.innerHTML =
+            '<div class="panel empty-state">' +
+            '  <h3>Transaksi tidak ditemukan</h3>' +
+            '  <p>Nomor invoice tidak valid atau belum ada pesanan yang dibuat.</p>' +
+            '  <a href="index.html" class="btn btn-primary">Kembali ke Katalog</a>' +
+            '</div>';
+          return;
+        }
+
+        if (!force && lastRenderedStatus === order.status) {
+          return;
+        }
+        const prevStatus = lastRenderedStatus;
+        lastRenderedStatus = order.status;
+
+        const qrisSvg = store.generateDummyQrisSvg(order.id + "|" + order.grandTotal + "|" + order.qrisRef);
+        const thankYouUrl = "thank-you.html?order=" + encodeURIComponent(order.id);
+        const simulatorUrl = "qris-approve.html?order=" + encodeURIComponent(order.id);
+
+        let statusSection = "";
+        if (order.status === "PAID") {
+          statusSection =
+            '<div class="realtime-banner paid">' +
+            '  <strong>&#10003; Pembayaran Berhasil (PAID)</strong><br>' +
+            '  Ref Approval: <code>' + store.escapeHtml(order.approvalRef || "-") + '</code> &bull; Waktu Lunas: ' + store.escapeHtml(store.formatWaktu(order.paidAt)) +
+            (prevStatus === "PENDING"
+              ? '<div style="margin-top:0.5rem;">Mengalihkan ke halaman struk dalam <strong id="redirect-sec">3</strong> detik...</div>'
+              : '') +
+            '</div>' +
+            '<div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; margin-top:1.25rem;">' +
+            '  <a href="' + thankYouUrl + '" class="btn btn-primary">Lihat Struk Pesanan</a>' +
+            '  <a href="history.html" class="btn btn-outline">Riwayat Transaksi</a>' +
+            '</div>';
+        } else if (order.status === "REJECTED") {
+          statusSection =
+            '<div class="realtime-banner rejected">' +
+            '  <strong>&#10005; Pembayaran Ditolak / Dibatalkan</strong><br>' +
+            '  Waktu: ' + store.escapeHtml(store.formatWaktu(order.rejectedAt)) +
+            '</div>' +
+            '<div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; margin-top:1.25rem;">' +
+            '  <a href="index.html" class="btn btn-primary">Kembali ke Katalog</a>' +
+            '  <a href="history.html" class="btn btn-outline">Riwayat Transaksi</a>' +
+            '</div>';
+        } else {
+          statusSection =
+            '<div class="realtime-banner">' +
+            '  <strong>Menunggu Pembayaran QRIS</strong><br>' +
+            '  Halaman ini memantau status secara otomatis. Buka <strong>Simulator QRIS</strong> di tab baru lalu tekan <em>Approve</em> untuk melihat perubahan status menjadi <strong>PAID</strong> secara realtime.' +
+            '</div>' +
+            '<div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; margin-top:1.25rem;">' +
+            '  <a href="' + simulatorUrl + '" target="_blank" rel="noopener" class="btn btn-gold">Buka Simulator QRIS &#8599;</a>' +
+            '  <a href="history.html" class="btn btn-outline">Riwayat Transaksi</a>' +
+            '</div>';
+        }
+
+        const itemRows = order.items.map(function (it) {
+          return (
+            '<div class="summary-row">' +
+            '  <span>' + store.escapeHtml(it.name) + ' <small style="font-family:\'Courier New\',monospace;">(' + store.escapeHtml(it.sku) + ' &times;' + it.qty + ')</small></span>' +
+            '  <strong>' + store.formatRupiah(it.subtotal) + '</strong>' +
+            '</div>'
+          );
+        }).join("");
+
+        root.innerHTML =
+          '<section class="panel">' +
+          '  <div class="panel-title">' +
+          '    <span>Invoice: ' + store.escapeHtml(order.id) + '</span>' +
+          '    <span>' + store.renderStatusBadge(order.status) + '</span>' +
+          '  </div>' +
+          '  <div class="qris-box">' +
+          '    <div style="font-family:\'Courier New\',monospace; font-size:0.82rem; color:var(--text-muted); text-transform:uppercase;">Total Pembayaran</div>' +
+          '    <div class="qris-amount">' + store.formatRupiah(order.grandTotal) + '</div>' +
+          '    <div class="qris-frame">' +
+          '      <div class="qris-header">' +
+          '        <span class="qris-logo">QRIS</span>' +
+          '        <span>NADA KLASIK AUDIO</span>' +
+          '      </div>' +
+          '      ' + qrisSvg +
+          '      <div class="qris-nmid">NMID: ID1025000984120 &bull; Ref: ' + store.escapeHtml(order.qrisRef) + '</div>' +
+          '    </div>' +
+          '    ' + statusSection +
+          '  </div>' +
+          '  <hr class="summary-divider" style="margin:1.75rem 0 1.25rem;">' +
+          '  <h3 style="font-family:Georgia,serif; font-size:1.05rem; margin-bottom:0.85rem;">Rincian Unit Pesanan</h3>' +
+          '  ' + itemRows +
+          '  <hr class="summary-divider">' +
+          '  <div class="summary-row"><span>Subtotal</span><strong>' + store.formatRupiah(order.subtotal) + '</strong></div>' +
+          '  <div class="summary-row"><span>Pengiriman (' + store.escapeHtml(order.shippingMethod) + ')</span><strong>' + (order.ongkir === 0 ? "Gratis" : store.formatRupiah(order.ongkir)) + '</strong></div>' +
+          '  <div class="summary-total" style="margin-bottom:0;"><span>Grand Total</span><span>' + store.formatRupiah(order.grandTotal) + '</span></div>' +
+          '</section>';
+
+        if (order.status === "PAID" && prevStatus === "PENDING") {
+          store.showToast("Pembayaran QRIS berhasil diverifikasi (PAID)!");
+          startRedirectCountdown(order.id);
+        }
+      }
+
+      store.onRealtimeUpdate(function () {
+        renderPayment(false);
+      });
+
+      setInterval(function () {
+        renderPayment(false);
+      }, 1000);
+
+      renderPayment(true);
+    })();
+  </script>
+</body>
+</html>

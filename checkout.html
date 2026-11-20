@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout Pesanan — NADA KLASIK</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="site-topbar"></div>
+
+  <section class="hero compact">
+    <div class="hero-box">
+      <div class="hero-text">
+        <span class="hero-step-tag">Langkah 2 dari 3</span>
+        <h1>Checkout Pesanan</h1>
+        <p>Lengkapi alamat pengiriman dan detail penerima sebelum melanjutkan ke pembayaran instan QRIS.</p>
+      </div>
+    </div>
+  </section>
+
+  <main class="page-container">
+    <div id="checkout-root"></div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">NADA KLASIK AUDIO STORE</div>
+      <div>Jl. Kemang Raya No. 45, Jakarta Selatan &bull; Buka Selasa - Minggu (10.00 - 20.00 WIB)</div>
+      <div>&copy; 2025 Nada Klasik. Simulasi Pemesanan &amp; Pembayaran QRIS Perangkat Audio Retro.</div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function () {
+      const store = window.NKStore;
+      store.renderTopbar("cart");
+
+      const root = document.getElementById("checkout-root");
+      let shippingMethod = "courier";
+
+      function renderCheckout() {
+        const cart = store.getCart();
+        if (cart.length === 0) {
+          root.innerHTML =
+            '<div class="panel empty-state">' +
+            '  <h3>Tidak ada unit untuk di-checkout</h3>' +
+            '  <p>Keranjang belanja Anda kosong. Silakan pilih perangkat audio retro di katalog terlebih dahulu.</p>' +
+            '  <a href="index.html" class="btn btn-primary">Buka Katalog</a>' +
+            '</div>';
+          return;
+        }
+
+        const ongkir = shippingMethod === "pickup" ? 0 : store.DEFAULT_COURIER_FEE;
+        const totals = store.getCartTotals(ongkir);
+
+        const summaryItemsHtml = cart.map(function (item) {
+          return (
+            '<div class="summary-row" style="align-items:flex-start; gap:0.75rem;">' +
+            '  <span>' + store.escapeHtml(item.name) + ' <small style="font-family:\'Courier New\',monospace;">&times;' + item.qty + '</small></span>' +
+            '  <strong style="white-space:nowrap;">' + store.formatRupiah(item.priceNum * item.qty) + '</strong>' +
+            '</div>'
+          );
+        }).join("");
+
+        root.innerHTML =
+          '<form id="checkout-form" class="two-col">' +
+          '  <section class="panel">' +
+          '    <div class="panel-title"><span>Data Penerima &amp; Pengiriman</span></div>' +
+          '    <div class="form-row">' +
+          '      <div class="form-group">' +
+          '        <label for="nama">Nama Lengkap *</label>' +
+          '        <input type="text" id="nama" name="nama" class="form-control" placeholder="Contoh: Raka Pratama" required>' +
+          '      </div>' +
+          '      <div class="form-group">' +
+          '        <label for="telepon">No. WhatsApp / Telepon *</label>' +
+          '        <input type="tel" id="telepon" name="telepon" class="form-control" placeholder="0812-xxxx-xxxx" required>' +
+          '      </div>' +
+          '    </div>' +
+          '    <div class="form-row">' +
+          '      <div class="form-group">' +
+          '        <label for="kota">Kota / Kabupaten *</label>' +
+          '        <input type="text" id="kota" name="kota" class="form-control" placeholder="Contoh: Jakarta Selatan" required>' +
+          '      </div>' +
+          '      <div class="form-group">' +
+          '        <label for="shipping">Metode Pengiriman</label>' +
+          '        <select id="shipping" name="shipping" class="form-control">' +
+          '          <option value="courier" ' + (shippingMethod === "courier" ? "selected" : "") + '>Kurir Khusus Audio &amp; Packing Kayu (Rp 150.000)</option>' +
+          '          <option value="pickup" ' + (shippingMethod === "pickup" ? "selected" : "") + '>Ambil di Toko Kemang, Jaksel (Gratis)</option>' +
+          '        </select>' +
+          '      </div>' +
+          '    </div>' +
+          '    <div class="form-group">' +
+          '      <label for="alamat">Alamat Lengkap *</label>' +
+          '      <textarea id="alamat" name="alamat" rows="3" class="form-control" placeholder="Nama jalan, nomor rumah, RT/RW, kode pos" required></textarea>' +
+          '    </div>' +
+          '    <div class="form-group">' +
+          '      <label for="catatan">Catatan Teknis / Pengiriman (Opsional)</label>' +
+          '      <input type="text" id="catatan" name="catatan" class="form-control" placeholder="Contoh: Sertakan kartu garansi servis &amp; step-down 110V">' +
+          '    </div>' +
+          '    <div class="panel-title" style="margin-top:1.5rem;"><span>Metode Pembayaran</span></div>' +
+          '    <div class="payment-option">' +
+          '      <div>' +
+          '        <div class="payment-option-title">QRIS (Pembayaran Instan)</div>' +
+          '        <div class="payment-option-desc">Scan kode QRIS melalui mobile banking atau e-wallet. Verifikasi lunas tersinkronisasi secara realtime.</div>' +
+          '      </div>' +
+          '      <span class="status-badge status-paid">Aktif</span>' +
+          '    </div>' +
+          '  </section>' +
+          '  <aside class="panel">' +
+          '    <div class="panel-title"><span>Ringkasan Pesanan</span></div>' +
+          '    ' + summaryItemsHtml +
+          '    <hr class="summary-divider">' +
+          '    <div class="summary-row">' +
+          '      <span>Subtotal</span>' +
+          '      <strong id="co-subtotal">' + store.formatRupiah(totals.subtotal) + '</strong>' +
+          '    </div>' +
+          '    <div class="summary-row">' +
+          '      <span>Ongkos Kirim</span>' +
+          '      <strong id="co-ongkir">' + (totals.ongkir === 0 ? "Gratis" : store.formatRupiah(totals.ongkir)) + '</strong>' +
+          '    </div>' +
+          '    <hr class="summary-divider">' +
+          '    <div class="summary-total">' +
+          '      <span>Grand Total</span>' +
+          '      <span id="co-grandtotal">' + store.formatRupiah(totals.grandTotal) + '</span>' +
+          '    </div>' +
+          '    <button type="submit" class="btn btn-primary btn-block">Buat Pesanan &amp; Bayar QRIS &rarr;</button>' +
+          '    <a href="cart.html" class="btn btn-outline btn-block" style="margin-top:0.65rem;">&larr; Kembali ke Keranjang</a>' +
+          '  </aside>' +
+          '</form>';
+
+        const shippingSelect = document.getElementById("shipping");
+        shippingSelect.addEventListener("change", function () {
+          shippingMethod = shippingSelect.value;
+          const newOngkir = shippingMethod === "pickup" ? 0 : store.DEFAULT_COURIER_FEE;
+          const t = store.getCartTotals(newOngkir);
+          document.getElementById("co-ongkir").textContent = t.ongkir === 0 ? "Gratis" : store.formatRupiah(t.ongkir);
+          document.getElementById("co-grandtotal").textContent = store.formatRupiah(t.grandTotal);
+        });
+
+        const form = document.getElementById("checkout-form");
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const customer = {
+            nama: document.getElementById("nama").value.trim(),
+            telepon: document.getElementById("telepon").value.trim(),
+            kota: document.getElementById("kota").value.trim(),
+            alamat: document.getElementById("alamat").value.trim(),
+            catatan: document.getElementById("catatan").value.trim()
+          };
+          const order = store.createOrder(customer, shippingMethod);
+          if (order) {
+            window.location.href = "payment.html?order=" + encodeURIComponent(order.id);
+          }
+        });
+      }
+
+      renderCheckout();
+    })();
+  </script>
+</body>
+</html>

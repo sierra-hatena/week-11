@@ -3,339 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NADA KLASIK — Katalog Audio Retro</title>
-  <style>
-    :root {
-      --bg-cream: #F4EFE6;
-      --bg-card: #FFFDF9;
-      --text-dark: #231F20;
-      --text-muted: #6B6257;
-      --accent-orange: #D95D39;
-      --accent-gold: #E09F3E;
-      --accent-teal: #335C67;
-      --border-retro: #D6CBB8;
-      --shadow-retro: 4px 4px 0px #231F20;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg-cream);
-      color: var(--text-dark);
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      line-height: 1.5;
-      background-image: radial-gradient(#D6CBB8 1px, transparent 1px);
-      background-size: 24px 24px;
-    }
-
-    /* Header */
-    header {
-      background-color: var(--text-dark);
-      color: var(--bg-cream);
-      border-bottom: 4px solid var(--accent-orange);
-      padding: 1.5rem 2rem;
-    }
-
-    .header-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .brand-title {
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: 1.8rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent-gold);
-    }
-
-    .brand-subtitle {
-      font-family: 'Courier New', monospace;
-      font-size: 0.8rem;
-      color: #CFC6B8;
-      letter-spacing: 1px;
-    }
-
-    .header-badge {
-      font-family: 'Courier New', monospace;
-      font-size: 0.85rem;
-      border: 1px solid var(--accent-gold);
-      padding: 0.4rem 0.9rem;
-      color: var(--accent-gold);
-      text-transform: uppercase;
-    }
-
-    /* Hero Section */
-    .hero {
-      max-width: 1200px;
-      margin: 2.5rem auto 2rem;
-      padding: 0 1.5rem;
-    }
-
-    .hero-box {
-      background-color: var(--accent-teal);
-      color: var(--bg-cream);
-      border: 2px solid var(--text-dark);
-      box-shadow: var(--shadow-retro);
-      padding: 2.5rem 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .hero-text h1 {
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: 2.2rem;
-      margin-bottom: 0.5rem;
-      color: #FFFDF9;
-    }
-
-    .hero-text p {
-      max-width: 620px;
-      color: #E2ECE9;
-      font-size: 1rem;
-    }
-
-    .hero-meta {
-      font-family: 'Courier New', monospace;
-      background-color: var(--text-dark);
-      color: var(--accent-gold);
-      padding: 1rem 1.25rem;
-      border: 1px solid var(--accent-gold);
-      font-size: 0.85rem;
-      line-height: 1.7;
-    }
-
-    /* Catalog Section */
-    .catalog-section {
-      max-width: 1200px;
-      margin: 0 auto 4rem;
-      padding: 0 1.5rem;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      border-bottom: 2px solid var(--text-dark);
-      padding-bottom: 0.75rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .section-header h2 {
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: 1.6rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .section-count {
-      font-family: 'Courier New', monospace;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    /* Grid */
-    .catalog-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 1.75rem;
-    }
-
-    /* Product Card */
-    .product-card {
-      background-color: var(--bg-card);
-      border: 2px solid var(--text-dark);
-      box-shadow: var(--shadow-retro);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .product-visual {
-      background-color: #EAE2D3;
-      border-bottom: 2px solid var(--text-dark);
-      position: relative;
-      height: 220px;
-      overflow: hidden;
-    }
-
-    .product-visual img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .product-era {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background-color: var(--text-dark);
-      color: var(--bg-cream);
-      font-family: 'Courier New', monospace;
-      font-size: 0.75rem;
-      padding: 0.2rem 0.5rem;
-      font-weight: bold;
-      z-index: 2;
-    }
-
-    .product-condition {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background-color: var(--accent-gold);
-      color: var(--text-dark);
-      border: 1px solid var(--text-dark);
-      font-family: 'Courier New', monospace;
-      font-size: 0.7rem;
-      padding: 0.2rem 0.5rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      z-index: 2;
-    }
-
-    .product-body {
-      padding: 1.25rem;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-category {
-      font-family: 'Courier New', monospace;
-      font-size: 0.75rem;
-      color: var(--accent-orange);
-      text-transform: uppercase;
-      font-weight: bold;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.35rem;
-    }
-
-    .product-title {
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: 1.15rem;
-      margin-bottom: 0.5rem;
-      color: var(--text-dark);
-    }
-
-    .product-desc {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-      flex-grow: 1;
-    }
-
-    .product-specs {
-      font-family: 'Courier New', monospace;
-      font-size: 0.75rem;
-      background-color: #F4EFE6;
-      border: 1px dashed var(--border-retro);
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-      color: var(--text-dark);
-    }
-
-    .product-footer {
-      border-top: 2px solid var(--border-retro);
-      padding: 0.9rem 1.25rem;
-      background-color: #FAF6EE;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .product-price {
-      font-family: 'Courier New', monospace;
-      font-size: 1.05rem;
-      font-weight: bold;
-      color: var(--text-dark);
-    }
-
-    .product-stock {
-      font-family: 'Courier New', monospace;
-      font-size: 0.75rem;
-      color: var(--accent-teal);
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-
-    /* Footer */
-    footer {
-      background-color: var(--text-dark);
-      color: #CFC6B8;
-      border-top: 4px solid var(--accent-gold);
-      padding: 2rem 1.5rem;
-      text-align: center;
-      font-size: 0.85rem;
-    }
-
-    .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .footer-brand {
-      font-family: Georgia, 'Times New Roman', serif;
-      color: var(--accent-gold);
-      font-size: 1.1rem;
-      letter-spacing: 1px;
-    }
-
-    @media (max-width: 600px) {
-      .hero-text h1 {
-        font-size: 1.65rem;
-      }
-      .header-container {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-  </style>
+  <title>NADA KLASIK — Katalog &amp; Webstore Audio Retro</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <div class="header-container">
-      <div class="brand">
-        <svg width="46" height="46" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="30" fill="#111111" stroke="#E09F3E" stroke-width="2"/>
-          <circle cx="32" cy="32" r="22" stroke="#333333" stroke-width="1.5"/>
-          <circle cx="32" cy="32" r="16" stroke="#333333" stroke-width="1.5"/>
-          <circle cx="32" cy="32" r="10" fill="#D95D39"/>
-          <circle cx="32" cy="32" r="3" fill="#F4EFE6"/>
-        </svg>
-        <div>
-          <div class="brand-title">Nada Klasik</div>
-          <div class="brand-subtitle">TOKO PERANGKAT AUDIO RETRO &amp; ANALOG</div>
-        </div>
-      </div>
-      <div class="header-badge">Katalog Resmi &bull; Edisi 2025</div>
-    </div>
-  </header>
+  <div id="site-topbar"></div>
 
   <!-- Hero Banner -->
   <section class="hero">
@@ -349,7 +22,7 @@
       </div>
       <div class="hero-meta">
         <div>LOKASI : Kemang, Jakarta Selatan</div>
-        <div>STATUS : Hanya Tampilan Katalog</div>
+        <div>STATUS : Online Store &amp; QRIS Aktif</div>
         <div>GARANSI: 6 Bulan Servis Analog</div>
       </div>
     </div>
@@ -362,9 +35,7 @@
       <span class="section-count" id="total-items">Memuat katalog...</span>
     </div>
 
-    <div class="catalog-grid" id="catalog-grid">
-      <!-- Produk akan dirender otomatis oleh JavaScript -->
-    </div>
+    <div class="catalog-grid" id="catalog-grid"></div>
   </main>
 
   <!-- Footer -->
@@ -372,320 +43,87 @@
     <div class="footer-inner">
       <div class="footer-brand">NADA KLASIK AUDIO STORE</div>
       <div>Jl. Kemang Raya No. 45, Jakarta Selatan &bull; Buka Selasa - Minggu (10.00 - 20.00 WIB)</div>
-      <div>&copy; 2025 Nada Klasik. Katalog Perangkat Audio Retro.</div>
+      <div>&copy; 2025 Nada Klasik. Simulasi Pemesanan &amp; Pembayaran QRIS Perangkat Audio Retro.</div>
     </div>
   </footer>
 
+  <script src="app.js"></script>
   <script>
-    // Data Katalog Produk Audio Retro (23 Item)
-    const retroAudioCatalog = [
-      {
-        sku: "RA-01",
-        name: "Tabletop Boombox Cassette Player",
-        category: "Boombox Stereo",
-        era: "1983",
-        condition: "Restored",
-        specs: "Dual Speaker | Cassette Deck | Radio FM/AM",
-        desc: "Pemutar kaset boombox klasik dengan bodi kokoh dan karakter suara stereo lantang untuk ruang santai.",
-        price: "Rp 4.800.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Boombox_cassette_player_on_tabletop_033f58c8.jpg"
-      },
-      {
-        sku: "RA-02",
-        name: "Glowing Vacuum Tube Amplifier",
-        category: "Amplifier Tabung",
-        era: "1972",
-        condition: "Mint",
-        specs: "Class-A Tube | Warm Output | Sasis Metal",
-        desc: "Amplifier tabung vakum dengan pendar cahaya hangat yang menghasilkan detail vokal lembut dan natural.",
-        price: "Rp 28.500.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Glowing_vacuum_tube_amplifier_8442267e.jpg"
-      },
-      {
-        sku: "RA-03",
-        name: "Portable Suitcase Turntable",
-        category: "Turntable Portabel",
-        era: "1968",
-        condition: "Restored",
-        specs: "3-Speed 33/45/78 | Built-in Speaker | Koper",
-        desc: "Pemutar piringan hitam model koper portabel yang ringkas, praktis dibawa, dan tetap mempertahankan nuansa vintage.",
-        price: "Rp 3.900.000",
-        stock: "Stok: 2 Unit",
-        image: "audio retro/Portable_suitcase_turntable_on_t…_a1ba6bc2.jpg"
-      },
-      {
-        sku: "RA-04",
-        name: "Retro CD Player Glowing Display",
-        category: "Pemutar CD Klasik",
-        era: "1988",
-        condition: "Mint",
-        specs: "16-Bit DAC | VFD Display | RCA Output",
-        desc: "Pemutar CD generasi awal dengan layar fluoresen berpendar klasik dan konverter digital-analog berkarakter hangat.",
-        price: "Rp 5.200.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Retro_CD_player_glowing_display_aafebad4.jpg"
-      },
-      {
-        sku: "RA-05",
-        name: "Classic Vinyl Turntable",
-        category: "Turntable / Piringan Hitam",
-        era: "1976",
-        condition: "Mint",
-        specs: "Belt-Drive | Tonearm S-Shape | Wood Plinth",
-        desc: "Meja putar piringan hitam dengan alas kayu elegan dan peredam getaran presisi untuk sesi mendengarkan audiophile.",
-        price: "Rp 11.400.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Turntable_playing_vinyl_record_bb6caab7.jpg"
-      },
-      {
-        sku: "RA-06",
-        name: "Vacuum Tube Preamplifier",
-        category: "Preamplifier Tabung",
-        era: "1974",
-        condition: "Collector",
-        specs: "Analog Dials | Phono Stage | Dual Mono",
-        desc: "Preamplifier tabung dengan panel dial analog presisi untuk memaksimalkan dinamika sinyal sebelum masuk ke power amp.",
-        price: "Rp 19.500.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Vacuum_tube_preamplifier_with_dials_561687b2.jpg"
-      },
-      {
-        sku: "RA-07",
-        name: "Vintage 8-Track Tape Player",
-        category: "Pemutar Pita 8-Track",
-        era: "1971",
-        condition: "Restored",
-        specs: "8-Track Cartridge | Program Selector | Wood Trim",
-        desc: "Pemutar kartrid pita 8-track langka dari era awal 70-an lengkap dengan indikator perpindahan trek mekanis.",
-        price: "Rp 6.200.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Vintage_8-track_tape_player_disp…_bb5a9209.jpg"
-      },
-      {
-        sku: "RA-08",
-        name: "Vintage Audiophile Headphones",
-        category: "Headphone Vintage",
-        era: "1975",
-        condition: "Mint",
-        specs: "Over-Ear | 1/4-inch Jack | Leather Pad",
-        desc: "Headphone studio klasik dengan bantalan kulit nyaman dan isolasi suara rapat untuk monitoring musik analog.",
-        price: "Rp 3.100.000",
-        stock: "Stok: 2 Unit",
-        image: "audio retro/Vintage_audiophile_headphones_in…_8a78caf3.jpg"
-      },
-      {
-        sku: "RA-09",
-        name: "Vintage Cassette Recorder Boombox",
-        category: "Boombox & Perekam",
-        era: "1982",
-        condition: "Restored",
-        specs: "Stereo Recorder | Mic Input | Tone Control",
-        desc: "Boombox sekaligus perekam kaset pita dengan tombol mekanis kokoh dan fitur pengaturan nada bass serta treble.",
-        price: "Rp 5.750.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Vintage_cassette_recorder_boombox_08533eea.jpg"
-      },
-      {
-        sku: "RA-10",
-        name: "Vintage Graphic Equalizer",
-        category: "Equalizer Analog",
-        era: "1984",
-        condition: "Mint",
-        specs: "10-Band Stereo | LED Level | Bypass Switch",
-        desc: "Equalizer grafis stereo dengan deretan slider presisi dan lampu indikator LED untuk membentuk kurva frekuensi sesuai selera.",
-        price: "Rp 4.400.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Vintage_graphic_equalizer_with_l…_929dbd4a.jpg"
-      },
-      {
-        sku: "RA-11",
-        name: "Vintage Neon Jukebox",
-        category: "Jukebox Kolektor",
-        era: "1958",
-        condition: "Collector",
-        specs: "45 RPM Vinyl Changer | Neon Tube | Coin Slot",
-        desc: "Mesin jukebox klasik berhias lampu neon warna-warni dengan mekanisme pemilih piringan hitam otomatis.",
-        price: "Rp 85.000.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Vintage_jukebox_glowing_with_neon_f464d3cb.jpg"
-      },
-      {
-        sku: "RA-12",
-        name: "Vintage Portable Cassette Player",
-        category: "Pemutar Kaset Portabel",
-        era: "1981",
-        condition: "Restored",
-        specs: "Stereo Output | Belt Clip | Metal Tape Ready",
-        desc: "Pemutar kaset saku portabel berdesain ramping dengan motor stabil yang siap memutar koleksi kaset pita favorit Anda.",
-        price: "Rp 4.200.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Vintage_portable_cassette_player…_dd486fd7.jpg"
-      },
-      {
-        sku: "RA-13",
-        name: "Vintage Reel-to-Reel Tape Deck",
-        category: "Reel-to-Reel Tape",
-        era: "1977",
-        condition: "Restored",
-        specs: "7-Inch Reel | 3-Motor Transport | VU Meter",
-        desc: "Dek pita magnetik open-reel kelas studio dengan dua VU meter analog besar dan panel kayu klasik.",
-        price: "Rp 14.800.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Vintage_reel_tape_deck_displayed_08edf436.jpg"
-      },
-      {
-        sku: "RA-14",
-        name: "Vintage Ribbon Microphone",
-        category: "Mikrofon Studio",
-        era: "1962",
-        condition: "Collector",
-        specs: "Figure-8 Polar | Boom Arm | XLR Output",
-        desc: "Mikrofon pita klasik bergaya penyiaran era 60-an lengkap dengan lengan penyangga, ideal untuk rekaman vokal hangat.",
-        price: "Rp 8.900.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Vintage_ribbon_microphone_on_arm_cd7fc6df.jpg"
-      },
-      {
-        sku: "RA-15",
-        name: "Vintage Studio Crossover Processor",
-        category: "Prosesor Audio Studio",
-        era: "1979",
-        condition: "Restored",
-        specs: "2-Way/3-Way | Rackmount 19-inch | Analog Pot",
-        desc: "Unit pemisah frekuensi aktif analog untuk sistem tata suara multi-jalur dengan kenop putar presisi.",
-        price: "Rp 6.500.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Vintage_studio_crossover_process…_d7f181f8.jpg"
-      },
-      {
-        sku: "RA-16",
-        name: "Vintage Studio Mixing Console",
-        category: "Konsol Mixer Analog",
-        era: "1978",
-        condition: "Collector",
-        specs: "16-Channel | Analog Preamp | VU Bridge",
-        desc: "Meja mixing konsol rekaman analog dengan preamp diskrit yang memberi warna saturasi musik era keemasan.",
-        price: "Rp 54.000.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Vintage_studio_mixing_console_desk_70f1ee6d.jpg"
-      },
-      {
-        sku: "RA-17",
-        name: "Vintage Transistor Radio",
-        category: "Radio Portabel",
-        era: "1966",
-        condition: "Mint",
-        specs: "AM/FM Band | Telescopic Antenna | Battery",
-        desc: "Radio transistor ringkas dengan grille depan klasik dan penangkapan sinyal jernih untuk menemani pagi hari.",
-        price: "Rp 1.850.000",
-        stock: "Stok: 2 Unit",
-        image: "audio retro/Vintage_transistor_radio_on_counter_942c0971.jpg"
-      },
-      {
-        sku: "RA-18",
-        name: "Vintage Tube Radio",
-        category: "Radio Tabung Klasik",
-        era: "1954",
-        condition: "Restored",
-        specs: "Vacuum Tube | AM/SW | Bakelite & Wood",
-        desc: "Radio meja bertenaga tabung vakum dari pertengahan abad ke-20 dengan tampilan dial skala frekuensi bercahaya.",
-        price: "Rp 7.300.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Vintage_tube_radio_displayed_ab60cdb1.jpg"
-      },
-      {
-        sku: "RA-19",
-        name: "Vintage Wooden Stereo Cabinet",
-        category: "Konsol Stereo Kayu",
-        era: "1965",
-        condition: "Collector",
-        specs: "All-in-One | Turntable + Radio | Walnut",
-        desc: "Lemari audio stereo terpadu berbahan kayu solid dengan pemutar piringan hitam dan radio tersembunyi di dalamnya.",
-        price: "Rp 32.000.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Vintage_wooden_stereo_cabinet_di…_addefd6b.jpg"
-      },
-      {
-        sku: "RA-20",
-        name: "Wooden Bookshelf Speakers",
-        category: "Speaker Rak Kayu",
-        era: "1974",
-        condition: "Mint",
-        specs: "2-Way Acoustic | 8 Ohm | Natural Wood",
-        desc: "Sepasang speaker rak kabinet kayu dengan karakter suara seimbang, cocok dipadukan bersama amplifier tabung atau receiver.",
-        price: "Rp 7.800.000",
-        stock: "Stok: 1 Pasang",
-        image: "audio retro/Wooden_bookshelf_speakers_with_d…_2acb40f0.jpg"
-      },
-      {
-        sku: "RA-21",
-        name: "Wooden Gramophone Brass Horn",
-        category: "Gramofon Antik",
-        era: "1925",
-        condition: "Collector",
-        specs: "Hand-Crank | 78 RPM Shellac | Brass Horn",
-        desc: "Gramofon mekanis engkol tangan dengan corong kuningan besar dan kotak kayu ukir yang sangat bernilai historis.",
-        price: "Rp 16.500.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Wooden_gramophone_with_brass_horn_bfe49a4b.jpg"
-      },
-      {
-        sku: "RA-22",
-        name: "Wooden Radio Tuner",
-        category: "Radio Tuner Analog",
-        era: "1973",
-        condition: "Restored",
-        specs: "FM/AM Stereo | Flywheel Tuning | Wood Case",
-        desc: "Unit tuner radio stereo berlapis kabinet kayu dengan roda pemutar tuning halus dan indikator kekuatan sinyal.",
-        price: "Rp 4.950.000",
-        stock: "Stok: 1 Unit",
-        image: "audio retro/Wooden_radio_tuner_on_table_f5fa6282.jpg"
-      },
-      {
-        sku: "RA-23",
-        name: "Wooden Speaker Tower",
-        category: "Speaker Menara Lantai",
-        era: "1978",
-        condition: "Mint",
-        specs: "3-Way Floorstanding | Dual Woofer | Oak",
-        desc: "Sepasang speaker menara lantai berbalut kayu oak dengan dentuman bass dalam dan panggung suara luas.",
-        price: "Rp 21.000.000",
-        stock: "Stok: 1 Pasang",
-        image: "audio retro/Wooden_speaker_tower_catalog_shot_0810d374.jpg"
-      }
-    ];
+    (function () {
+      const store = window.NKStore;
+      store.renderTopbar("katalog");
 
-    // Render Katalog ke DOM saat halaman dimuat
-    document.addEventListener("DOMContentLoaded", () => {
       const grid = document.getElementById("catalog-grid");
       const totalItems = document.getElementById("total-items");
 
-      totalItems.textContent = `Menampilkan ${retroAudioCatalog.length} Unit Koleksi`;
+      function getQtyInCart(sku) {
+        const found = store.getCart().find(function (c) {
+          return c.sku === sku;
+        });
+        return found ? found.qty : 0;
+      }
 
-      const htmlContent = retroAudioCatalog.map(item => `
-        <article class="product-card">
-          <div class="product-visual">
-            <span class="product-era">${item.era}</span>
-            <span class="product-condition">${item.condition}</span>
-            <img src="${item.image}" alt="${item.name}">
-          </div>
-          <div class="product-body">
-            <div class="product-category">${item.category} &bull; ${item.sku}</div>
-            <h3 class="product-title">${item.name}</h3>
-            <p class="product-desc">${item.desc}</p>
-            <div class="product-specs">${item.specs}</div>
-          </div>
-          <div class="product-footer">
-            <span class="product-price">${item.price}</span>
-            <span class="product-stock">${item.stock}</span>
-          </div>
-        </article>
-      `).join("");
+      function renderKatalog() {
+        const produk = store.retroAudioCatalog;
+        totalItems.textContent = "Menampilkan " + produk.length + " Unit Koleksi";
 
-      grid.innerHTML = htmlContent;
-    });
+        grid.innerHTML = produk.map(function (item) {
+          const inCart = getQtyInCart(item.sku);
+          const maxReached = inCart >= item.stockMax;
+          const btnClass = maxReached ? "btn btn-teal btn-block btn-add-cart" : "btn btn-primary btn-block btn-add-cart";
+          const btnText = maxReached
+            ? "&#10003; Di Keranjang (" + inCart + "/" + item.stockMax + ")"
+            : inCart > 0
+            ? "+ Tambah Lagi (" + inCart + "/" + item.stockMax + ")"
+            : "+ Tambah ke Keranjang";
+
+          return (
+            '<article class="product-card">' +
+            '  <div class="product-visual">' +
+            '    <span class="product-era">' + store.escapeHtml(item.era) + '</span>' +
+            '    <span class="product-condition">' + store.escapeHtml(item.condition) + '</span>' +
+            '    <img src="' + store.escapeHtml(item.image) + '" alt="' + store.escapeHtml(item.name) + '" loading="lazy">' +
+            '  </div>' +
+            '  <div class="product-body">' +
+            '    <div class="product-category">' + store.escapeHtml(item.category) + ' &bull; ' + store.escapeHtml(item.sku) + '</div>' +
+            '    <h3 class="product-title">' + store.escapeHtml(item.name) + '</h3>' +
+            '    <p class="product-desc">' + store.escapeHtml(item.desc) + '</p>' +
+            '    <div class="product-specs">' + store.escapeHtml(item.specs) + '</div>' +
+            '  </div>' +
+            '  <div class="product-footer">' +
+            '    <span class="product-price">' + store.escapeHtml(item.price) + '</span>' +
+            '    <span class="product-stock">' + store.escapeHtml(item.stock) + '</span>' +
+            '  </div>' +
+            '  <div class="product-action">' +
+            '    <button type="button" class="' + btnClass + '" data-sku="' + store.escapeHtml(item.sku) + '">' +
+            '      ' + btnText +
+            '    </button>' +
+            '  </div>' +
+            '</article>'
+          );
+        }).join("");
+      }
+
+      grid.addEventListener("click", function (e) {
+        const btn = e.target.closest(".btn-add-cart");
+        if (!btn) return;
+        const sku = btn.getAttribute("data-sku");
+        const res = store.addToCart(sku, 1);
+
+        if (res.ok) {
+          store.showToast(res.product.name + " ditambahkan ke keranjang");
+          renderKatalog();
+        } else if (res.reason === "MAX_STOCK") {
+          store.showToast("Stok maksimal tercapai (" + res.product.stock + ")");
+        }
+      });
+
+      store.onRealtimeUpdate(function () {
+        renderKatalog();
+      });
+
+      renderKatalog();
+    })();
   </script>
 </body>
 </html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riwayat Transaksi — NADA KLASIK</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="site-topbar"></div>
+
+  <section class="hero compact">
+    <div class="hero-box">
+      <div class="hero-text">
+        <span class="hero-step-tag">Status Tersinkronisasi Realtime</span>
+        <h1>Riwayat Transaksi</h1>
+        <p>Pantau seluruh pesanan perangkat audio retro dan status pembayaran QRIS Anda secara langsung.</p>
+      </div>
+    </div>
+  </section>
+
+  <main class="page-container">
+    <div id="history-root"></div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">NADA KLASIK AUDIO STORE</div>
+      <div>Jl. Kemang Raya No. 45, Jakarta Selatan &bull; Buka Selasa - Minggu (10.00 - 20.00 WIB)</div>
+      <div>&copy; 2025 Nada Klasik. Simulasi Pemesanan &amp; Pembayaran QRIS Perangkat Audio Retro.</div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function () {
+      const store = window.NKStore;
+      store.renderTopbar("history");
+
+      const root = document.getElementById("history-root");
+      let activeFilter = "ALL";
+      let lastSignature = "";
+
+      function getSignature(orders) {
+        return activeFilter + "|" + orders.map(function (o) {
+          return o.id + ":" + o.status + ":" + (o.paidAt || "");
+        }).join(",");
+      }
+
+      function renderHistory(force) {
+        const orders = store.getOrders();
+        const sig = getSignature(orders);
+        if (!force && sig === lastSignature) return;
+        lastSignature = sig;
+
+        if (orders.length === 0) {
+          root.innerHTML =
+            '<div class="panel empty-state">' +
+            '  <h3>Belum ada riwayat transaksi</h3>' +
+            '  <p>Pesanan yang Anda buat akan tampil di sini lengkap dengan status pembayaran QRIS secara realtime.</p>' +
+            '  <a href="index.html" class="btn btn-primary">Mulai Belanja</a>' +
+            '</div>';
+          return;
+        }
+
+        const filtered = orders.filter(function (o) {
+          return activeFilter === "ALL" ? true : o.status === activeFilter;
+        });
+
+        const countPending = orders.filter(function (o) { return o.status === "PENDING"; }).length;
+        const countPaid = orders.filter(function (o) { return o.status === "PAID"; }).length;
+        const countRejected = orders.filter(function (o) { return o.status === "REJECTED"; }).length;
+
+        const filterButtons =
+          '<div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.15rem;">' +
+          '  <button type="button" class="btn btn-sm ' + (activeFilter === "ALL" ? "btn-primary" : "btn-outline") + '" data-filter="ALL">Semua (' + orders.length + ')</button>' +
+          '  <button type="button" class="btn btn-sm ' + (activeFilter === "PENDING" ? "btn-primary" : "btn-outline") + '" data-filter="PENDING">Menunggu (' + countPending + ')</button>' +
+          '  <button type="button" class="btn btn-sm ' + (activeFilter === "PAID" ? "btn-primary" : "btn-outline") + '" data-filter="PAID">Paid (' + countPaid + ')</button>' +
+          '  <button type="button" class="btn btn-sm ' + (activeFilter === "REJECTED" ? "btn-primary" : "btn-outline") + '" data-filter="REJECTED">Ditolak (' + countRejected + ')</button>' +
+          '</div>';
+
+        const rowsHtml = filtered.length === 0
+          ? '<tr><td colspan="6" style="text-align:center; padding:2rem; color:var(--text-muted);">Tidak ada transaksi dengan filter ini.</td></tr>'
+          : filtered.map(function (o) {
+              const itemsText = o.items.map(function (it) {
+                return store.escapeHtml(it.name) + " &times;" + it.qty;
+              }).join(", ");
+
+              const actionHtml =
+                o.status === "PENDING"
+                  ? '<a href="payment.html?order=' + encodeURIComponent(o.id) + '" class="btn btn-primary btn-sm">Bayar QRIS</a>'
+                  : '<a href="thank-you.html?order=' + encodeURIComponent(o.id) + '" class="btn btn-outline btn-sm">Lihat Struk</a> ' +
+                    '<a href="payment.html?order=' + encodeURIComponent(o.id) + '" class="btn btn-outline btn-sm">Status</a>';
+
+              return (
+                '<tr>' +
+                '  <td>' +
+                '    <strong style="font-family:\'Courier New\',monospace;">' + store.escapeHtml(o.id) + '</strong><br>' +
+                '    <small style="color:var(--text-muted);">' + store.escapeHtml(store.formatWaktu(o.createdAt)) + '</small>' +
+                '  </td>' +
+                '  <td>' +
+                '    <div><strong>' + store.escapeHtml(o.customer.nama) + '</strong></div>' +
+                '    <small style="color:var(--text-muted);">' + store.escapeHtml(o.customer.kota) + '</small>' +
+                '  </td>' +
+                '  <td style="max-width:260px;">' + itemsText + '</td>' +
+                '  <td style="font-family:\'Courier New\',monospace;">' +
+                '    <div style="font-size:0.76rem; color:var(--text-muted);">Sub: ' + store.formatRupiah(o.subtotal) + '</div>' +
+                '    <strong>' + store.formatRupiah(o.grandTotal) + '</strong>' +
+                '  </td>' +
+                '  <td>' +
+                '    ' + store.renderStatusBadge(o.status) +
+                (o.paidAt ? '<div style="font-size:0.72rem; color:var(--text-muted); margin-top:0.25rem;">' + store.escapeHtml(store.formatWaktu(o.paidAt)) + '</div>' : '') +
+                '  </td>' +
+                '  <td style="white-space:nowrap;">' + actionHtml + '</td>' +
+                '</tr>'
+              );
+            }).join("");
+
+        root.innerHTML =
+          '<section class="panel">' +
+          '  <div class="panel-title">' +
+          '    <span>Daftar Transaksi</span>' +
+          '    <a href="index.html" class="btn btn-outline btn-sm">Kembali ke Katalog</a>' +
+          '  </div>' +
+          '  ' + filterButtons +
+          '  <div class="table-wrap">' +
+          '    <table class="data-table">' +
+          '      <thead>' +
+          '        <tr>' +
+          '          <th>Invoice</th>' +
+          '          <th>Penerima</th>' +
+          '          <th>Unit Audio</th>' +
+          '          <th>Total</th>' +
+          '          <th>Status</th>' +
+          '          <th>Aksi</th>' +
+          '        </tr>' +
+          '      </thead>' +
+          '      <tbody>' + rowsHtml + '</tbody>' +
+          '    </table>' +
+          '  </div>' +
+          '</section>';
+      }
+
+      root.addEventListener("click", function (e) {
+        const btn = e.target.closest("[data-filter]");
+        if (!btn) return;
+        activeFilter = btn.getAttribute("data-filter");
+        renderHistory(true);
+      });
+
+      store.onRealtimeUpdate(function () {
+        renderHistory(false);
+      });
+
+      setInterval(function () {
+        renderHistory(false);
+      }, 1000);
+
+      renderHistory(true);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Struk Pesanan — NADA KLASIK</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="site-topbar"></div>
+
+  <section class="hero compact">
+    <div class="hero-box">
+      <div class="hero-text">
+        <span class="hero-step-tag">Konfirmasi &amp; Garansi Analog 6 Bulan</span>
+        <h1>Terima Kasih atas Pesanan Anda</h1>
+        <p>Berikut adalah ringkasan invoice resmi dan status pembayaran pesanan Anda di Nada Klasik Audio Store.</p>
+      </div>
+    </div>
+  </section>
+
+  <main class="page-container narrow">
+    <div id="thankyou-root"></div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">NADA KLASIK AUDIO STORE</div>
+      <div>Jl. Kemang Raya No. 45, Jakarta Selatan &bull; Buka Selasa - Minggu (10.00 - 20.00 WIB)</div>
+      <div>&copy; 2025 Nada Klasik. Simulasi Pemesanan &amp; Pembayaran QRIS Perangkat Audio Retro.</div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function () {
+      const store = window.NKStore;
+      store.renderTopbar("history");
+
+      const root = document.getElementById("thankyou-root");
+      const params = new URLSearchParams(window.location.search);
+      let orderId = params.get("order");
+
+      if (!orderId) {
+        const all = store.getOrders();
+        if (all.length > 0) orderId = all[0].id;
+      }
+
+      let lastStatus = null;
+
+      function renderThankYou(force) {
+        const order = orderId ? store.getOrderById(orderId) : null;
+
+        if (!order) {
+          root.innerHTML =
+            '<div class="panel empty-state">' +
+            '  <h3>Data pesanan tidak ditemukan</h3>' +
+            '  <p>Silakan periksa daftar transaksi Anda di halaman riwayat transaksi.</p>' +
+            '  <a href="history.html" class="btn btn-primary">Buka Riwayat Transaksi</a>' +
+            '</div>';
+          return;
+        }
+
+        if (!force && lastStatus === order.status) return;
+        lastStatus = order.status;
+
+        const bannerHtml =
+          order.status === "PAID"
+            ? '<div class="realtime-banner paid" style="margin-top:0; margin-bottom:1.25rem;">' +
+              '  <strong>&#10003; Pembayaran QRIS Lunas (PAID)</strong><br>' +
+              '  Terima kasih, <strong>' + store.escapeHtml(order.customer.nama) + '</strong>! Pembayaran diverifikasi pada ' + store.escapeHtml(store.formatWaktu(order.paidAt)) + ' (Ref: <code>' + store.escapeHtml(order.approvalRef || "-") + '</code>). Sertifikat garansi servis analog 6 bulan dilampirkan bersama unit.' +
+              '</div>'
+            : order.status === "REJECTED"
+            ? '<div class="realtime-banner rejected" style="margin-top:0; margin-bottom:1.25rem;">' +
+              '  <strong>&#10005; Pembayaran Ditolak</strong><br>' +
+              '  Transaksi ini ditolak pada ' + store.escapeHtml(store.formatWaktu(order.rejectedAt)) + '.' +
+              '</div>'
+            : '<div class="realtime-banner" style="margin-top:0; margin-bottom:1.25rem;">' +
+              '  <strong>Menunggu Pembayaran QRIS</strong><br>' +
+              '  Status halaman ini akan berubah otomatis menjadi <strong>PAID</strong> begitu pembayaran di-approve. ' +
+              '  <a href="payment.html?order=' + encodeURIComponent(order.id) + '" style="text-decoration:underline; color:var(--accent-orange); font-weight:700;">Kembali ke QRIS</a>' +
+              '</div>';
+
+        const rowsHtml = order.items.map(function (it) {
+          return (
+            '<tr>' +
+            '  <td><strong>' + store.escapeHtml(it.name) + '</strong><br><small style="font-family:\'Courier New\',monospace; color:var(--text-muted);">' + store.escapeHtml(it.sku) + ' &bull; Era ' + store.escapeHtml(it.era) + ' &bull; ' + store.formatRupiah(it.priceNum) + '</small></td>' +
+            '  <td style="text-align:center; font-family:\'Courier New\',monospace;">' + it.qty + '</td>' +
+            '  <td style="text-align:right; font-family:\'Courier New\',monospace;"><strong>' + store.formatRupiah(it.subtotal) + '</strong></td>' +
+            '</tr>'
+          );
+        }).join("");
+
+        root.innerHTML =
+          '<section class="panel">' +
+          '  <div class="panel-title">' +
+          '    <span>Struk Pesanan &bull; ' + store.escapeHtml(order.id) + '</span>' +
+          '    <span>' + store.renderStatusBadge(order.status) + '</span>' +
+          '  </div>' +
+          '  ' + bannerHtml +
+          '  <div class="form-row" style="margin-bottom:1.25rem; font-size:0.88rem;">' +
+          '    <div>' +
+          '      <div style="font-family:\'Courier New\',monospace; color:var(--text-muted); font-size:0.76rem; text-transform:uppercase; font-weight:700;">Data Penerima</div>' +
+          '      <div><strong>' + store.escapeHtml(order.customer.nama) + '</strong></div>' +
+          '      <div>' + store.escapeHtml(order.customer.telepon) + '</div>' +
+          '      <div>' + store.escapeHtml(order.customer.alamat) + ', ' + store.escapeHtml(order.customer.kota) + '</div>' +
+          (order.customer.catatan ? '<div style="color:var(--text-muted); margin-top:0.25rem;">Catatan: ' + store.escapeHtml(order.customer.catatan) + '</div>' : '') +
+          '    </div>' +
+          '    <div>' +
+          '      <div style="font-family:\'Courier New\',monospace; color:var(--text-muted); font-size:0.76rem; text-transform:uppercase; font-weight:700;">Info Transaksi</div>' +
+          '      <div>Tanggal Order: ' + store.escapeHtml(store.formatWaktu(order.createdAt)) + '</div>' +
+          '      <div>Metode Bayar: <strong>' + store.escapeHtml(order.paymentMethod) + '</strong> (' + store.escapeHtml(order.qrisRef) + ')</div>' +
+          '      <div>Pengiriman: ' + store.escapeHtml(order.shippingMethod) + '</div>' +
+          '    </div>' +
+          '  </div>' +
+          '  <div class="table-wrap">' +
+          '    <table class="data-table">' +
+          '      <thead>' +
+          '        <tr>' +
+          '          <th>Perangkat Audio</th>' +
+          '          <th style="text-align:center;">Qty</th>' +
+          '          <th style="text-align:right;">Subtotal</th>' +
+          '        </tr>' +
+          '      </thead>' +
+          '      <tbody>' + rowsHtml + '</tbody>' +
+          '    </table>' +
+          '  </div>' +
+          '  <div style="max-width:340px; margin-left:auto; margin-top:1.1rem;">' +
+          '    <div class="summary-row"><span>Subtotal</span><strong>' + store.formatRupiah(order.subtotal) + '</strong></div>' +
+          '    <div class="summary-row"><span>Ongkos Kirim</span><strong>' + (order.ongkir === 0 ? "Gratis" : store.formatRupiah(order.ongkir)) + '</strong></div>' +
+          '    <hr class="summary-divider">' +
+          '    <div class="summary-total" style="margin-bottom:0;"><span>Grand Total</span><span>' + store.formatRupiah(order.grandTotal) + '</span></div>' +
+          '  </div>' +
+          '  <div class="no-print" style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:1.75rem; padding-top:1.25rem; border-top:2px dashed var(--border-retro);">' +
+          '    <a href="history.html" class="btn btn-primary">Riwayat Transaksi</a>' +
+          '    <a href="index.html" class="btn btn-outline">Kembali ke Katalog</a>' +
+          '    <button type="button" class="btn btn-teal" id="btn-print-receipt">Cetak Struk</button>' +
+          '  </div>' +
+          '</section>';
+
+        const printBtn = document.getElementById("btn-print-receipt");
+        if (printBtn) {
+          printBtn.addEventListener("click", function () {
+            window.print();
+          });
+        }
+      }
+
+      store.onRealtimeUpdate(function () {
+        renderThankYou(false);
+      });
+
+      setInterval(function () {
+        renderThankYou(false);
+      }, 1000);
+
+      renderThankYou(true);
+    })();
+  </script>
+</body>
+</html>
