@@ -6,7 +6,7 @@
   const CHANNEL_NAME = "nada_klasik_realtime_v1";
   const DEFAULT_COURIER_FEE = 150000;
 
-  // Data Katalog Produk Audio Retro (23 Item asli Nada Klasik)
+  // Data Katalog Produk Audio Retro (23 Item Planet Vinyl)
   const retroAudioCatalog = [
     {
       sku: "RA-01",
@@ -16,6 +16,7 @@
       condition: "Restored",
       specs: "Dual Stereo Speakers | Cassette Deck | FM/AM Tuner",
       desc: "Boombox stereo portabel ikonik dengan dek kaset analog mekanis, equalizer grafis geser, serta meter VU analog presisi.",
+      fullDesc: "JVC RC-M70 keluaran 1983 adalah salah satu boombox stereo portabel paling legendaris di era kejayaan kaset pita. Unit ini telah melalui restorasi menyeluruh pada sabuk penggerak dek kaset, pembersihan potensiometer geser, serta kalibrasi tuner FM/AM agar penangkapan sinyal tetap jernih. Dilengkapi sepasang speaker full-range bertenaga dengan karakter bass punchy dan dua VU meter analog responsif.",
       priceNum: 4800000,
       price: "Rp 4.800.000",
       stock: "Stok: 1 Unit",
@@ -30,6 +31,7 @@
       condition: "Mint",
       specs: "KT88 Quad Tubes | Class-A/AB | Output 2x75W",
       desc: "Power amplifier tabung vakum legendaris dengan pendaran filamen hangat yang menghasilkan detail vokal lembut dan natural.",
+      fullDesc: "McIntosh MC275 adalah mahakarya teknik audio tabung vakum yang memadukan kekuatan 2x75 Watt dengan musikalitas khas Class-A/AB. Menggunakan empat tabung daya KT88 berpadu trafo output Unity Coupled Circuit, amplifier ini menyajikan panggung suara luas, mid-range vokal yang intim, dan distorsi harmonik yang sangat rendah. Kondisi Mint dengan tabung terukur seimbang.",
       priceNum: 28500000,
       price: "Rp 28.500.000",
       stock: "Stok: 1 Unit",
@@ -44,6 +46,7 @@
       condition: "Restored",
       specs: "3-Speed 33/45/78 | Built-in Mono Speaker | Koper",
       desc: "Pemutar piringan hitam model koper portabel era 60-an yang ringkas dengan penguat internal dan tiga kecepatan putar.",
+      fullDesc: "Dansette Major Deluxe membawa nuansa otentik ruang musik Inggris akhir tahun 1960-an dalam balutan koper portabel yang elegan. Mendukung tiga kecepatan putar (33 1/3, 45, dan 78 RPM) sehingga cocok untuk koleksi piringan hitam LP maupun single 7 inci. Penguat internal dan speaker bawaannya telah direstorasi dengan jarum stylus baru.",
       priceNum: 3900000,
       price: "Rp 3.900.000",
       stock: "Stok: 2 Unit",
@@ -58,6 +61,7 @@
       condition: "Mint",
       specs: "Dual 16-Bit DAC | VFD Display | RCA Line Out",
       desc: "Pemutar Compact Disc generasi awal era 80-an dengan layar fluoresen berpendar klasik dan konverter digital-analog natural.",
+      fullDesc: "Sony CDP-507ESD mewakili era keemasan pemutar CD audiophile dengan sasis anti-getar kokoh dan mekanisme optik presisi tinggi. Dibekali arsitektur Dual 16-Bit DAC untuk separasi kanal yang bersih dan dinamika suara hangat tanpa kesan tajam berlebih. Layar VFD berpendar terang dan pembacaan disc sangat cepat.",
       priceNum: 5200000,
       price: "Rp 5.200.000",
       stock: "Stok: 1 Unit",
@@ -72,6 +76,7 @@
       condition: "Mint",
       specs: "Suspended Sub-Chassis | S-Tonearm | Walnut Plinth",
       desc: "Meja putar piringan hitam suspensi pegas dengan alas kayu kenari solid dan tonearm presisi rendah resonansi untuk audiophile.",
+      fullDesc: "Thorens TD-160 adalah standar emas turntable belt-drive asal Swiss dengan sistem suspensi sub-chassis tiga pegas yang efektif meredam getaran lantai. Alas kayu kenari (walnut plinth) tampil mulus berpadu platter aluminium berat dan tonearm presisi. Ideal untuk penikmat piringan hitam yang mengutamakan kestabilan pitch dan detail analog murni.",
       priceNum: 11400000,
       price: "Rp 11.400.000",
       stock: "Stok: 1 Unit",
@@ -86,6 +91,7 @@
       condition: "Collector",
       specs: "12AX7 Tube Stage | Rotary Selector | Phono MM",
       desc: "Preamplifier tabung klasik dengan kenop putar aluminium presisi dan tahap penguat phono RIAA untuk memaksimalkan dinamika sinyal.",
+      fullDesc: "Marantz Model 7C dikenal luas sebagai salah satu preamplifier tabung paling musikal sepanjang sejarah audio hi-fi. Mengandalkan enam tabung 12AX7 untuk tahap phono RIAA dan line stage, unit ini menghadirkan tekstur suara tiga dimensi yang kaya dan organik. Panel depan aluminium berukir rapi dengan seluruh kenop selektor bekerja presisi.",
       priceNum: 19500000,
       price: "Rp 19.500.000",
       stock: "Stok: 1 Unit",
@@ -100,6 +106,7 @@
       condition: "Restored",
       specs: "4-Program Auto Track | Wood Trim | Line Out",
       desc: "Dek pemutar kartrid pita 8-track langka dari era awal 70-an beraksen panel kayu lengkap dengan indikator trek mekanis.",
+      fullDesc: "Panasonic RS-805US adalah pemutar kartrid pita 8-track klasik yang jarang ditemui dalam kondisi prima. Dilengkapi fitur perpindahan otomatis antar 4 program lagu, lampu indikator program yang menyala hangat, serta bodi beraksen kayu walnut khas ruang keluarga tahun 70-an. Head magnetik dan motor telah dibersihkan serta dikalibrasi ulang.",
       priceNum: 6200000,
       price: "Rp 6.200.000",
       stock: "Stok: 1 Unit",
@@ -114,6 +121,7 @@
       condition: "Mint",
       specs: "Closed-Back Dynamic | 250 Ohm | 6.35mm Jack",
       desc: "Headphone monitor studio tertutup legendaris dengan bantalan telinga tebal dan isolasi akustik rapat untuk monitoring analog.",
+      fullDesc: "Koss Pro/4AA adalah headphone monitor studio ikonik yang menjadi andalan teknisi rekaman dan stasiun radio di era 1970-an. Dengan impedansi 250 Ohm dan desain closed-back berisolasi tinggi, headphone ini mampu memblokir kebisingan luar sekaligus menyajikan respons frekuensi akurat. Menggunakan konektor jack stereo 6.35mm yang siap dipasangkan ke receiver atau amplifier klasik.",
       priceNum: 3100000,
       price: "Rp 3.100.000",
       stock: "Stok: 2 Unit",
@@ -128,6 +136,7 @@
       condition: "Restored",
       specs: "Dual Cassette Deck | Super Woofer | 4-Band Radio",
       desc: "Boombox sekaligus perekam kaset pita bertenaga besar dengan dek ganda, tombol mekanis kokoh, dan kontrol nada terpisah.",
+      fullDesc: "Sharp GF-777 dijuluki sebagai salah satu raja boombox era 80-an berkat dimensinya yang gagah dan keluaran suara bertenaga besar. Memiliki dua dek kaset untuk pemutaran dan dubbing, sistem Super Woofer dengan pengaturan level bass independen, serta radio 4-band. Seluruh mekanisme tombol dan dek telah direstorasi hingga siap pakai.",
       priceNum: 5750000,
       price: "Rp 5.750.000",
       stock: "Stok: 1 Unit",
@@ -142,6 +151,7 @@
       condition: "Mint",
       specs: "10-Band Stereo | ±12dB Slider | LED Level Meter",
       desc: "Equalizer grafis stereo 10-band per kanal dengan deretan slider presisi dan lampu indikator LED untuk kalibrasi frekuensi.",
+      fullDesc: "ADC Sound Shaper Ten memberikan kendali penuh atas karakter akustik ruangan melalui 10-band equalizer stereo per kanal dengan rentang penyesuaian ±12dB. Setiap slider dilengkapi lampu LED yang memudahkan pengaturan bahkan di ruangan temaram. Sangat efektif untuk menyempurnakan respons frekuensi sistem hi-fi vintage Anda.",
       priceNum: 4400000,
       price: "Rp 4.400.000",
       stock: "Stok: 1 Unit",
@@ -156,6 +166,7 @@
       condition: "Collector",
       specs: "100-Selection 45 RPM | Tube Amp | Neon Arch",
       desc: "Mesin jukebox klasik berhias lengkungan lampu neon warna-warni dengan mekanisme pemilih piringan hitam 45 RPM otomatis.",
+      fullDesc: "Wurlitzer 2200 tahun 1958 adalah barang koleksi tingkat museum yang menghadirkan atmosfer diner dan lounge klasik Amerika langsung ke ruangan Anda. Mekanisme carousel otomatisnya mampu menampung hingga 50 piringan hitam 45 RPM (100 pilihan lagu sisi A/B), ditenagai amplifier tabung internal dan dihiasi lengkungan neon berpendar memukau.",
       priceNum: 85000000,
       price: "Rp 85.000.000",
       stock: "Stok: 1 Unit",
@@ -170,6 +181,7 @@
       condition: "Restored",
       specs: "Bodi Logam | Dual Headphone Jack | Hotline Mic",
       desc: "Pemutar kaset saku portabel legendaris berbalut sasis logam kokoh dengan keluaran headphone ganda dan motor pita stabil.",
+      fullDesc: "Sony Walkman TPS-L2 adalah ikon budaya pop yang merevolusi cara orang mendengarkan musik secara personal. Hadir dengan bodi logam biru-perak khas, dua jack headphone 3.5mm untuk mendengarkan musik berdua, serta tombol Hotline oranye ikonik. Motor pemutar, pinch roller, dan sabuk karet telah diganti baru agar kecepatan putar tetap akurat.",
       priceNum: 4200000,
       price: "Rp 4.200.000",
       stock: "Stok: 1 Unit",
@@ -184,6 +196,7 @@
       condition: "Restored",
       specs: "7-Inch Open Reel | Glass & X'tal Head | Dual VU",
       desc: "Dek pita magnetik open-reel 7 inci kelas studio dengan head GX tahan aus, dua VU meter analog besar, dan panel kayu klasik.",
+      fullDesc: "Akai GX-4000D adalah deck pita open-reel 7 inci yang terkenal tangguh berkat teknologi Glass & X'tal Ferrite (GX) Head yang nyaris bebas aus. Dilengkapi dua VU meter analog besar untuk memantau level perekaman dan pemutaran secara presisi, serta kabinet samping kayu walnut yang menawan. Mendukung kecepatan 3 3/4 dan 7 1/2 IPS.",
       priceNum: 14800000,
       price: "Rp 14.800.000",
       stock: "Stok: 1 Unit",
@@ -198,6 +211,7 @@
       condition: "Collector",
       specs: "Figure-8 Polar | Ribbon Transducer | Boom Arm",
       desc: "Mikrofon pita klasik era keemasan penyiaran radio lengkap dengan lengan penyangga, ideal untuk karakter vokal hangat.",
+      fullDesc: "RCA 44-BX adalah mikrofon ribbon legendaris yang membentuk suara vokal dan instrumen tiup di studio rekaman serta stasiun radio klasik. Dengan pola tangkap Figure-8 (bidirectional) dan pita aluminium ultra-tipis, mikrofon ini menghasilkan karakter mid-low yang penuh, halus, dan minim sibilance. Disertakan lengkap dengan boom arm bergaya studio antik.",
       priceNum: 8900000,
       price: "Rp 8.900.000",
       stock: "Stok: 1 Unit",
@@ -212,6 +226,7 @@
       condition: "Restored",
       specs: "2-Way/3-Way Active | 24dB/Octave | 19\" Rackmount",
       desc: "Unit pemisah frekuensi aktif analog rak 19 inci untuk sistem tata suara multi-jalur dengan kenop putar presisi.",
+      fullDesc: "Ashly XR-1001 merupakan crossover aktif analog standar studio yang dirancang untuk membagi spektrum frekuensi secara akurat ke amplifier subwoofer, mid-range, dan tweeter. Menggunakan filter Linkwitz-Riley 24dB/octave dalam format rackmount 19 inci yang kokoh. Seluruh kenop putar dan sakelar telah dibersihkan agar bebas noise.",
       priceNum: 6500000,
       price: "Rp 6.500.000",
       stock: "Stok: 1 Unit",
@@ -226,6 +241,7 @@
       condition: "Collector",
       specs: "Discrete Class-A | 3-Band EQ | VU Meter Bridge",
       desc: "Meja mixing konsol rekaman analog diskrit dengan preamp ikonik yang memberi warna saturasi musik era keemasan.",
+      fullDesc: "Neve 8068 adalah konsol rekaman analog legendaris yang digunakan untuk memproduksi ratusan album rock dan jazz klasik dunia. Dibangun sepenuhnya dengan sirkuit diskrit Class-A, trafo Marinair, serta 3-band EQ musikal yang mampu memberikan kehangatan dan bobot saturasi harmonik khas rekaman analog sejati.",
       priceNum: 54000000,
       price: "Rp 54.000.000",
       stock: "Stok: 1 Unit",
@@ -240,6 +256,7 @@
       condition: "Mint",
       specs: "8-Transistor Circuit | AM/FM Band | Telescopic Antenna",
       desc: "Radio transistor saku ringkas dengan grille depan klasik, antena teleskopik krom, dan penangkapan sinyal jernih.",
+      fullDesc: "Zenith Royal 500 menghadirkan desain industrial Amerika pertengahan abad ke-20 dalam ukuran portabel yang menawan. Menggunakan sirkuit 8-transistor sensitif untuk menangkap siaran AM dan FM dengan kejernihan suara vokal yang khas, dilengkapi antena teleskopik krom mulus dan grille depan bernuansa retro.",
       priceNum: 1850000,
       price: "Rp 1.850.000",
       stock: "Stok: 2 Unit",
@@ -254,6 +271,7 @@
       condition: "Restored",
       specs: "6-Tube Superheterodyne | Magic Eye | Walnut Case",
       desc: "Radio meja bertenaga tabung vakum pertengahan abad ke-20 dengan tampilan dial skala frekuensi kaca berpendar hangat.",
+      fullDesc: "Telefunken Gavotte 54 asal Jerman ini memancarkan keanggunan era 1950-an lewat kabinet kayu walnut mengilap dan panel skala frekuensi kaca yang berpendar hangat saat dinyalakan. Ditenagai 6 tabung vakum superheterodyne lengkap dengan indikator penala 'Magic Eye' hijau klasik dan karakter suara radio tabung yang tebal serta menenangkan.",
       priceNum: 7300000,
       price: "Rp 7.300.000",
       stock: "Stok: 1 Unit",
@@ -268,6 +286,7 @@
       condition: "Collector",
       specs: "All-in-One Credenza | Tube Receiver | Built-in Turntable",
       desc: "Lemari audio stereo terpadu berbahan kayu kenari solid dengan pemutar piringan hitam dan radio tabung di dalamnya.",
+      fullDesc: "Grundig KS-560 adalah furnitur audio mid-century modern asal Jerman yang memadukan estetika ruang tamu kelas atas dengan sistem hi-fi terpadu. Di balik penutup kayu kenari solidnya tersimpan turntable otomatis, receiver radio tabung multi-band, serta sepasang speaker internal berkarakter hangat yang mengisi ruangan dengan suara penuh.",
       priceNum: 32000000,
       price: "Rp 32.000.000",
       stock: "Stok: 1 Unit",
@@ -282,6 +301,7 @@
       condition: "Mint",
       specs: "2-Way Acoustic Suspension | 15 Ohm | Walnut Veneer",
       desc: "Sepasang speaker monitor rak standar penyiaran BBC dengan kabinet lapis kayu kenari dan reproduksi vokal akurat.",
+      fullDesc: "Rogers LS3/5A dirancang sesuai spesifikasi ketat BBC sebagai monitor referensi jarak dekat. Meski berukuran ringkas, speaker 2-way acoustic suspension 15 Ohm ini terkenal di kalangan audiophile berkat pencitraan stereo (imaging) yang sangat presisi dan reproduksi vokal yang begitu hidup. Kabinet walnut veneer dalam kondisi terawat istimewa.",
       priceNum: 7800000,
       price: "Rp 7.800.000",
       stock: "Stok: 1 Pasang",
@@ -296,6 +316,7 @@
       condition: "Collector",
       specs: "Hand-Crank Spring Motor | 78 RPM Shellac | Brass Horn",
       desc: "Gramofon mekanis engkol tangan era 1920-an dengan corong akustik kuningan murni dan kotak kayu ukir bernilai historis.",
+      fullDesc: "Victor Victrola VV-IV adalah artefak musik mekanis sejati dari tahun 1925 yang bekerja sepenuhnya tanpa listrik. Menggunakan motor pegas engkol tangan yang telah diservis agar putaran stabil pada 78 RPM untuk memutar piringan shellac klasik. Corong akustik berbahan kuningan murni dan kotak kayu ukirnya memberikan nilai koleksi sekaligus dekorasi historis yang tak ternilai.",
       priceNum: 16500000,
       price: "Rp 16.500.000",
       stock: "Stok: 1 Unit",
@@ -310,6 +331,7 @@
       condition: "Restored",
       specs: "FM/AM Stereo | Flywheel Tuning | Dual Signal Meter",
       desc: "Unit tuner radio stereo kelas audiophile berlapis kabinet kayu dengan roda pemutar tuning halus dan indikator sinyal ganda.",
+      fullDesc: "Pioneer TX-9100 adalah tuner radio stereo flagship era 70-an yang mengedepankan sensitivitas penangkapan sinyal FM/AM dan kejernihan suara setara sumber rekaman studio. Dilengkapi roda flywheel tuning berbobot mantap yang berputar sangat halus serta dua meter analog untuk kekuatan sinyal dan pusat tuning. Kabinet kayu telah dipoles ulang.",
       priceNum: 4950000,
       price: "Rp 4.950.000",
       stock: "Stok: 1 Unit",
@@ -324,6 +346,7 @@
       condition: "Mint",
       specs: "15\" Woofer + Horn Tweeter | Bass Reflex | Oiled Walnut",
       desc: "Sepasang speaker menara lantai berbalut kayu walnut dengan woofer 15 inci, dentuman bass dalam, dan panggung suara luas.",
+      fullDesc: "JBL L200 Studio Master menghadirkan pengalaman mendengarkan konser live di dalam ruangan. Menggabungkan woofer 15 inci berdaya tinggi dengan compression driver horn tweeter legendaris JBL, speaker ini mampu mereproduksi dinamika jazz, rock klasik, hingga orkestra dengan effortless. Kabinet oiled walnut dalam kondisi Mint dan siap memanjakan telinga Anda.",
       priceNum: 21000000,
       price: "Rp 21.000.000",
       stock: "Stok: 1 Pasang",
@@ -521,7 +544,7 @@
     const m = String(now.getMonth() + 1).padStart(2, "0");
     const d = String(now.getDate()).padStart(2, "0");
     const rand = Math.floor(1000 + Math.random() * 9000);
-    return "INV-NK-" + y + m + d + "-" + rand;
+    return "INV-PV-" + y + m + d + "-" + rand;
   }
 
   function createOrder(customer, shippingMethod) {
@@ -616,7 +639,7 @@
     const totalPx = size * cell + quiet * 2;
 
     let hash = 2166136261;
-    const text = String(seedText || "NADA-KLASIK-QRIS");
+    const text = String(seedText || "PLANET-VINYL-QRIS");
     for (let i = 0; i < text.length; i++) {
       hash ^= text.charCodeAt(i);
       hash = Math.imul(hash, 16777619);
@@ -712,7 +735,7 @@
     );
   }
 
-  // Shared Header / Topbar + Side Drawer (Estetika 1970-an)
+  // Shared Header / Topbar + Side Drawer (Estetika 1970-an - Planet Vinyl)
   function renderTopbar(activePage) {
     const holder = document.getElementById("site-topbar");
     if (!holder) return;
@@ -725,15 +748,9 @@
       '<header class="site-header">' +
       '  <div class="header-container">' +
       '    <a href="index.html" class="brand">' +
-      '      <svg width="46" height="46" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-      '        <circle cx="32" cy="32" r="30" fill="#1C120C" stroke="#E5A93B" stroke-width="2.5"/>' +
-      '        <circle cx="32" cy="32" r="22" stroke="#4A3222" stroke-width="1.5"/>' +
-      '        <circle cx="32" cy="32" r="16" stroke="#4A3222" stroke-width="1.5"/>' +
-      '        <circle cx="32" cy="32" r="10" fill="#D45B27"/>' +
-      '        <circle cx="32" cy="32" r="3" fill="#F6ECD9"/>' +
-      '      </svg>' +
+      '      <img src="logo/Planet Vinyl.png" alt="Logo Planet Vinyl" class="brand-logo" width="52" height="52">' +
       '      <div>' +
-      '        <div class="brand-title">Nada Klasik</div>' +
+      '        <div class="brand-title">PLANET VINYL</div>' +
       '        <div class="brand-subtitle">TOKO PERANGKAT AUDIO RETRO &amp; ANALOG</div>' +
       '      </div>' +
       '    </a>' +
@@ -749,7 +766,7 @@
       '  <div class="drawer-head">' +
       '    <div>' +
       '      <div class="drawer-kicker">HI-FI STEREO &bull; EST. 1974</div>' +
-      '      <div class="drawer-title">Navigasi Toko</div>' +
+      '      <div class="drawer-title">PLANET VINYL</div>' +
       '    </div>' +
       '    <button type="button" class="drawer-close" id="nk-drawer-close" aria-label="Tutup menu">&times;</button>' +
       '  </div>' +

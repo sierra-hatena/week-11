@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NADA KLASIK — Katalog &amp; Webstore Audio Retro</title>
+  <title>PLANET VINYL — Katalog &amp; Webstore Audio Retro</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
       <div class="hero-text">
         <h1>Suara Hangat Era Analog</h1>
         <p>
-          Koleksi kurasi perangkat audio vintage pilihan dari era klasik. 
+          Koleksi kurasi perangkat audio vintage pilihan dari era klasik di Planet Vinyl. 
           Setiap unit telah melalui proses inspeksi, kalibrasi, dan restorasi komponen agar kembali menghasilkan karakter suara otentik.
         </p>
       </div>
@@ -29,21 +29,103 @@
   </section>
 
   <!-- Katalog Produk -->
-  <main class="catalog-section">
+  <main class="catalog-section" id="catalog-section">
     <div class="section-header">
       <h2>Katalog Koleksi Audio</h2>
       <span class="section-count" id="total-items">Memuat katalog...</span>
     </div>
 
+    <!-- Filter & Sort Bar -->
+    <section class="catalog-filter-bar" aria-label="Filter dan Urutkan Katalog">
+      <div class="filter-field">
+        <label for="filter-brand">Brand</label>
+        <select id="filter-brand" class="filter-select">
+          <option value="ALL">Semua Brand</option>
+        </select>
+      </div>
+
+      <div class="filter-field">
+        <label for="filter-type">Tipe Equipment</label>
+        <select id="filter-type" class="filter-select">
+          <option value="ALL">Semua Tipe</option>
+          <option value="profesional">Equipment Profesional</option>
+          <option value="rumah-tangga">Komersial / Rumah Tangga</option>
+        </select>
+      </div>
+
+      <div class="filter-field">
+        <label for="filter-condition">Kondisi Produk</label>
+        <select id="filter-condition" class="filter-select">
+          <option value="ALL">Semua Kondisi</option>
+          <option value="Mint">Mint</option>
+          <option value="Restored">Restored</option>
+          <option value="Collector">Collector</option>
+        </select>
+      </div>
+
+      <div class="filter-field">
+        <label for="filter-sort">Urutan Tahun Rilis</label>
+        <select id="filter-sort" class="filter-select">
+          <option value="default">Urutan Default</option>
+          <option value="era-asc">Tua ke Muda (Terlama &rarr; Terbaru)</option>
+          <option value="era-desc">Muda ke Tua (Terbaru &rarr; Terlama)</option>
+        </select>
+      </div>
+
+      <div class="filter-reset-wrap">
+        <button type="button" class="btn btn-outline btn-sm" id="btn-reset-filter">Reset Filter</button>
+      </div>
+    </section>
+
     <div class="catalog-grid" id="catalog-grid"></div>
+
+    <nav class="pagination-bar" id="pagination-bar" aria-label="Navigasi halaman katalog" style="display: none;"></nav>
   </main>
+
+  <!-- Pop-up Detail Produk -->
+  <div class="product-modal-backdrop" id="product-modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-product-title">
+    <div class="product-modal-dialog">
+      <button type="button" class="product-modal-close" id="modal-close-btn" aria-label="Tutup detail produk">&times;</button>
+      <div class="product-modal-grid">
+        <div class="product-modal-visual">
+          <span class="product-era" id="modal-product-era"></span>
+          <span class="product-condition" id="modal-product-condition"></span>
+          <img id="modal-product-img" src="" alt="">
+        </div>
+        <div class="product-modal-body">
+          <div class="product-category" id="modal-product-category"></div>
+          <h3 class="product-modal-title" id="modal-product-title"></h3>
+          <p class="product-modal-desc" id="modal-product-desc"></p>
+          <div class="product-specs" id="modal-product-specs"></div>
+          <div class="product-modal-meta-row">
+            <span class="product-modal-price" id="modal-product-price"></span>
+            <span class="product-stock" id="modal-product-stock"></span>
+          </div>
+          <button type="button" class="btn btn-primary btn-block" id="modal-add-cart-btn" data-sku="">+ Tambah ke Keranjang</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Cart Button (Selalu Tampil di Ujung Kanan Bawah) -->
+  <a href="cart.html" class="floating-cart-btn" id="floating-cart-btn" aria-label="Buka Keranjang Belanja">
+    <span class="floating-cart-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#2B1B12" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="20" r="1.6" fill="#2B1B12"/>
+        <circle cx="18" cy="20" r="1.6" fill="#2B1B12"/>
+        <path d="M2.5 3.5H5.5L7.6 14.5C7.8 15.4 8.6 16 9.5 16H17.8C18.7 16 19.5 15.4 19.7 14.5L21 7.5H6.2"/>
+      </svg>
+    </span>
+    <span>Keranjang</span>
+    <span class="floating-cart-badge" id="floating-cart-count">0</span>
+  </a>
 
   <!-- Footer -->
   <footer>
     <div class="footer-inner">
-      <div class="footer-brand">NADA KLASIK AUDIO STORE</div>
+      <div class="footer-brand">PLANET VINYL AUDIO STORE</div>
       <div>Jl. Kemang Raya No. 45, Jakarta Selatan &bull; Buka Selasa - Minggu (10.00 - 20.00 WIB)</div>
-      <div>&copy; 2025 Nada Klasik. Simulasi Pemesanan &amp; Pembayaran QRIS Perangkat Audio Retro.</div>
+      <div>&copy; 2025 Planet Vinyl. Simulasi Pemesanan &amp; Pembayaran QRIS Perangkat Audio Retro.</div>
     </div>
   </footer>
 
@@ -51,10 +133,140 @@
   <script>
     (function () {
       const store = window.NKStore;
+
+      function applyPlanetVinylBrand() {
+        const topbar = document.getElementById("site-topbar");
+        if (!topbar) return;
+
+        const brand = topbar.querySelector(".brand");
+        if (brand) {
+          brand.querySelectorAll("svg, img, .brand-mark, .brand-icon").forEach(function (el) {
+            el.remove();
+          });
+          const logoImg = document.createElement("img");
+          logoImg.src = "logo/Planet Vinyl.png";
+          logoImg.alt = "Logo Planet Vinyl";
+          logoImg.className = "brand-logo";
+          logoImg.width = 52;
+          logoImg.height = 52;
+          brand.insertBefore(logoImg, brand.firstChild);
+        }
+
+        const brandTitle = topbar.querySelector(".brand-title");
+        if (brandTitle) brandTitle.textContent = "PLANET VINYL";
+
+        const brandSub = topbar.querySelector(".brand-subtitle");
+        if (brandSub) {
+          brandSub.textContent = brandSub.textContent.replace(/nada klasik/gi, "Planet Vinyl");
+        }
+
+        const drawerTitle = topbar.querySelector(".drawer-title");
+        if (drawerTitle) drawerTitle.textContent = "PLANET VINYL";
+
+        const drawerFoot = topbar.querySelector(".drawer-foot");
+        if (drawerFoot) {
+          drawerFoot.innerHTML = drawerFoot.innerHTML.replace(/nada klasik/gi, "Planet Vinyl");
+        }
+      }
+
+      const floatingCartCount = document.getElementById("floating-cart-count");
+
+      function syncFloatingCart() {
+        if (!floatingCartCount) return;
+        floatingCartCount.textContent = String(store.getCartCount());
+      }
+
       store.renderTopbar("katalog");
+      applyPlanetVinylBrand();
+      syncFloatingCart();
+
+      const ITEMS_PER_PAGE = 6;
+      const PRO_SKUS = new Set(["RA-08", "RA-10", "RA-13", "RA-14", "RA-15", "RA-16", "RA-20"]);
 
       const grid = document.getElementById("catalog-grid");
       const totalItems = document.getElementById("total-items");
+      const paginationBar = document.getElementById("pagination-bar");
+      const catalogSection = document.getElementById("catalog-section");
+
+      // Filter Elements
+      const filterBrandEl = document.getElementById("filter-brand");
+      const filterTypeEl = document.getElementById("filter-type");
+      const filterConditionEl = document.getElementById("filter-condition");
+      const filterSortEl = document.getElementById("filter-sort");
+      const resetFilterBtn = document.getElementById("btn-reset-filter");
+
+      // Modal Elements
+      const modal = document.getElementById("product-modal");
+      const modalCloseBtn = document.getElementById("modal-close-btn");
+      const modalEra = document.getElementById("modal-product-era");
+      const modalCondition = document.getElementById("modal-product-condition");
+      const modalImg = document.getElementById("modal-product-img");
+      const modalCategory = document.getElementById("modal-product-category");
+      const modalTitle = document.getElementById("modal-product-title");
+      const modalDesc = document.getElementById("modal-product-desc");
+      const modalSpecs = document.getElementById("modal-product-specs");
+      const modalPrice = document.getElementById("modal-product-price");
+      const modalStock = document.getElementById("modal-product-stock");
+      const modalAddCartBtn = document.getElementById("modal-add-cart-btn");
+      let activeModalSku = null;
+
+      function getBrand(item) {
+        return String(item.name || "").trim().split(/\s+/)[0] || "";
+      }
+
+      function getEquipmentType(item) {
+        return PRO_SKUS.has(item.sku) ? "profesional" : "rumah-tangga";
+      }
+
+      function populateBrandFilter() {
+        const brands = Array.from(
+          new Set((store.retroAudioCatalog || []).map(getBrand).filter(Boolean))
+        ).sort();
+        brands.forEach(function (brand) {
+          const opt = document.createElement("option");
+          opt.value = brand;
+          opt.textContent = brand;
+          filterBrandEl.appendChild(opt);
+        });
+      }
+
+      populateBrandFilter();
+
+      function getFilteredAndSortedProducts() {
+        const brandVal = filterBrandEl.value;
+        const typeVal = filterTypeEl.value;
+        const conditionVal = filterConditionEl.value;
+        const sortVal = filterSortEl.value;
+
+        let list = (store.retroAudioCatalog || []).filter(function (item) {
+          if (brandVal !== "ALL" && getBrand(item) !== brandVal) return false;
+          if (typeVal !== "ALL" && getEquipmentType(item) !== typeVal) return false;
+          if (conditionVal !== "ALL" && item.condition !== conditionVal) return false;
+          return true;
+        });
+
+        if (sortVal === "era-asc") {
+          list = list.slice().sort(function (a, b) {
+            return (parseInt(a.era, 10) || 0) - (parseInt(b.era, 10) || 0);
+          });
+        } else if (sortVal === "era-desc") {
+          list = list.slice().sort(function (a, b) {
+            return (parseInt(b.era, 10) || 0) - (parseInt(a.era, 10) || 0);
+          });
+        }
+
+        return list;
+      }
+
+      function getPageFromUrl(totalPages) {
+        const params = new URLSearchParams(window.location.search);
+        const raw = parseInt(params.get("page"), 10);
+        if (isNaN(raw) || raw < 1) return 1;
+        if (totalPages > 0 && raw > totalPages) return totalPages;
+        return raw;
+      }
+
+      let currentPage = getPageFromUrl(0);
 
       function getQtyInCart(sku) {
         const found = store.getCart().find(function (c) {
@@ -63,22 +275,138 @@
         return found ? found.qty : 0;
       }
 
-      function renderKatalog() {
-        const produk = store.retroAudioCatalog;
-        totalItems.textContent = "Menampilkan " + produk.length + " Unit Koleksi";
-
-        grid.innerHTML = produk.map(function (item) {
-          const inCart = getQtyInCart(item.sku);
-          const maxReached = inCart >= item.stockMax;
-          const btnClass = maxReached ? "btn btn-teal btn-block btn-add-cart" : "btn btn-primary btn-block btn-add-cart";
-          const btnText = maxReached
+      function getCartButtonMeta(item) {
+        const inCart = getQtyInCart(item.sku);
+        const maxReached = inCart >= item.stockMax;
+        return {
+          className: maxReached ? "btn btn-teal btn-block btn-add-cart" : "btn btn-primary btn-block btn-add-cart",
+          html: maxReached
             ? "&#10003; Di Keranjang (" + inCart + "/" + item.stockMax + ")"
             : inCart > 0
             ? "+ Tambah Lagi (" + inCart + "/" + item.stockMax + ")"
-            : "+ Tambah ke Keranjang";
+            : "+ Tambah ke Keranjang"
+        };
+      }
+
+      function syncModalCartButton() {
+        if (!activeModalSku || modal.hidden) return;
+        const item = (store.retroAudioCatalog || []).find(function (p) {
+          return p.sku === activeModalSku;
+        });
+        if (!item) return;
+        const meta = getCartButtonMeta(item);
+        modalAddCartBtn.className = meta.className;
+        modalAddCartBtn.innerHTML = meta.html;
+        modalAddCartBtn.setAttribute("data-sku", item.sku);
+      }
+
+      function openProductModal(sku) {
+        const item = (store.retroAudioCatalog || []).find(function (p) {
+          return p.sku === sku;
+        });
+        if (!item) return;
+
+        activeModalSku = item.sku;
+        modalEra.textContent = item.era;
+        modalCondition.textContent = item.condition;
+        modalImg.src = item.image;
+        modalImg.alt = item.name;
+        modalCategory.textContent = item.category + " \u2022 " + item.sku;
+        modalTitle.textContent = item.name;
+        modalDesc.textContent = item.fullDesc || item.desc || "";
+        modalSpecs.textContent = item.specs;
+        modalPrice.textContent = item.price;
+        modalStock.textContent = item.stock;
+
+        modal.hidden = false;
+        document.body.classList.add("drawer-open");
+        syncModalCartButton();
+      }
+
+      function closeProductModal() {
+        activeModalSku = null;
+        modal.hidden = true;
+        document.body.classList.remove("drawer-open");
+      }
+
+      function handleAddToCart(sku) {
+        const res = store.addToCart(sku, 1);
+        if (res.ok) {
+          store.showToast(res.product.name + " ditambahkan ke keranjang");
+          renderKatalog();
+          applyPlanetVinylBrand();
+          syncFloatingCart();
+          syncModalCartButton();
+        } else if (res.reason === "MAX_STOCK") {
+          store.showToast("Stok maksimal tercapai (" + res.product.stock + ")");
+        }
+      }
+
+      function renderPagination(totalPages) {
+        if (totalPages <= 1) {
+          paginationBar.innerHTML = "";
+          paginationBar.style.display = "none";
+          return;
+        }
+
+        paginationBar.style.display = "flex";
+
+        let pageButtonsHtml = "";
+        for (let p = 1; p <= totalPages; p++) {
+          const isActive = p === currentPage;
+          pageButtonsHtml +=
+            '<button type="button" class="btn btn-sm ' + (isActive ? "btn-primary" : "btn-outline") + ' btn-page" data-page="' + p + '"' +
+            (isActive ? ' aria-current="page"' : "") + '>' + p + '</button>';
+        }
+
+        paginationBar.innerHTML =
+          '<span class="pagination-info">Halaman ' + currentPage + ' dari ' + totalPages + '</span>' +
+          '<div class="pagination-controls">' +
+          '  <button type="button" class="btn btn-sm btn-outline btn-page" data-page="' + (currentPage - 1) + '"' + (currentPage <= 1 ? ' disabled' : '') + '>&laquo; Sebelumnya</button>' +
+          '  ' + pageButtonsHtml +
+          '  <button type="button" class="btn btn-sm btn-outline btn-page" data-page="' + (currentPage + 1) + '"' + (currentPage >= totalPages ? ' disabled' : '') + '>Berikutnya &raquo;</button>' +
+          '</div>';
+      }
+
+      function renderKatalog() {
+        const produk = getFilteredAndSortedProducts();
+        const totalCount = produk.length;
+        const totalPages = Math.max(1, Math.ceil(totalCount / ITEMS_PER_PAGE));
+
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, totalCount);
+        const pageItems = produk.slice(startIndex, endIndex);
+
+        if (totalCount === 0) {
+          totalItems.textContent = "0 Unit ditemukan";
+          grid.innerHTML =
+            '<div class="panel empty-state catalog-empty-filter">' +
+            '  <h3>Tidak ada produk yang sesuai filter</h3>' +
+            '  <p>Coba ubah kombinasi Brand, Tipe Equipment, atau Kondisi Produk.</p>' +
+            '  <button type="button" class="btn btn-primary" id="btn-empty-reset">Reset Semua Filter</button>' +
+            '</div>';
+          paginationBar.innerHTML = "";
+          paginationBar.style.display = "none";
+          syncFloatingCart();
+          syncModalCartButton();
+          return;
+        }
+
+        if (totalPages === 1) {
+          totalItems.textContent = "Menampilkan " + totalCount + " Unit Koleksi";
+        } else {
+          totalItems.textContent =
+            "Menampilkan " + (startIndex + 1) + "-" + endIndex + " dari " + totalCount + " Unit (Halaman " + currentPage + "/" + totalPages + ")";
+        }
+
+        grid.innerHTML = pageItems.map(function (item) {
+          const btnMeta = getCartButtonMeta(item);
 
           return (
-            '<article class="product-card">' +
+            '<article class="product-card" data-sku="' + store.escapeHtml(item.sku) + '">' +
             '  <div class="product-visual">' +
             '    <span class="product-era">' + store.escapeHtml(item.era) + '</span>' +
             '    <span class="product-condition">' + store.escapeHtml(item.condition) + '</span>' +
@@ -95,31 +423,111 @@
             '    <span class="product-stock">' + store.escapeHtml(item.stock) + '</span>' +
             '  </div>' +
             '  <div class="product-action">' +
-            '    <button type="button" class="' + btnClass + '" data-sku="' + store.escapeHtml(item.sku) + '">' +
-            '      ' + btnText +
+            '    <button type="button" class="' + btnMeta.className + '" data-sku="' + store.escapeHtml(item.sku) + '">' +
+            '      ' + btnMeta.html +
             '    </button>' +
             '  </div>' +
             '</article>'
           );
         }).join("");
+
+        renderPagination(totalPages);
+        syncFloatingCart();
+        syncModalCartButton();
       }
 
-      grid.addEventListener("click", function (e) {
-        const btn = e.target.closest(".btn-add-cart");
-        if (!btn) return;
-        const sku = btn.getAttribute("data-sku");
-        const res = store.addToCart(sku, 1);
+      function applyFilterChange() {
+        currentPage = 1;
+        const url = new URL(window.location.href);
+        url.searchParams.delete("page");
+        window.history.replaceState({ page: 1 }, "", url.toString());
+        renderKatalog();
+      }
 
-        if (res.ok) {
-          store.showToast(res.product.name + " ditambahkan ke keranjang");
-          renderKatalog();
-        } else if (res.reason === "MAX_STOCK") {
-          store.showToast("Stok maksimal tercapai (" + res.product.stock + ")");
+      function resetAllFilters() {
+        filterBrandEl.value = "ALL";
+        filterTypeEl.value = "ALL";
+        filterConditionEl.value = "ALL";
+        filterSortEl.value = "default";
+        applyFilterChange();
+      }
+
+      [filterBrandEl, filterTypeEl, filterConditionEl, filterSortEl].forEach(function (el) {
+        el.addEventListener("change", applyFilterChange);
+      });
+
+      resetFilterBtn.addEventListener("click", resetAllFilters);
+
+      function goToPage(page) {
+        const produk = getFilteredAndSortedProducts();
+        const totalPages = Math.max(1, Math.ceil(produk.length / ITEMS_PER_PAGE));
+        if (page < 1 || page > totalPages || page === currentPage) return;
+
+        currentPage = page;
+        const url = new URL(window.location.href);
+        url.searchParams.set("page", String(currentPage));
+        window.history.pushState({ page: currentPage }, "", url.toString());
+
+        renderKatalog();
+        if (catalogSection) {
+          catalogSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+
+      paginationBar.addEventListener("click", function (e) {
+        const btn = e.target.closest(".btn-page");
+        if (!btn || btn.disabled) return;
+        const targetPage = parseInt(btn.getAttribute("data-page"), 10);
+        if (!isNaN(targetPage)) {
+          goToPage(targetPage);
+        }
+      });
+
+      window.addEventListener("popstate", function () {
+        const produk = getFilteredAndSortedProducts();
+        const totalPages = Math.max(1, Math.ceil(produk.length / ITEMS_PER_PAGE));
+        currentPage = getPageFromUrl(totalPages);
+        renderKatalog();
+      });
+
+      grid.addEventListener("click", function (e) {
+        if (e.target.id === "btn-empty-reset") {
+          resetAllFilters();
+          return;
+        }
+        const addBtn = e.target.closest(".btn-add-cart");
+        if (addBtn) {
+          handleAddToCart(addBtn.getAttribute("data-sku"));
+          return;
+        }
+        const card = e.target.closest(".product-card");
+        if (card) {
+          openProductModal(card.getAttribute("data-sku"));
+        }
+      });
+
+      modalAddCartBtn.addEventListener("click", function () {
+        const sku = modalAddCartBtn.getAttribute("data-sku");
+        if (sku) handleAddToCart(sku);
+      });
+
+      modalCloseBtn.addEventListener("click", closeProductModal);
+
+      modal.addEventListener("click", function (e) {
+        if (e.target === modal) closeProductModal();
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && !modal.hidden) {
+          closeProductModal();
         }
       });
 
       store.onRealtimeUpdate(function () {
         renderKatalog();
+        applyPlanetVinylBrand();
+        syncFloatingCart();
+        syncModalCartButton();
       });
 
       renderKatalog();

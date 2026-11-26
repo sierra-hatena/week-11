@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pembayaran QRIS — NADA KLASIK</title>
+  <title>Pembayaran QRIS — PLANET VINYL</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,9 +26,9 @@
 
   <footer>
     <div class="footer-inner">
-      <div class="footer-brand">NADA KLASIK AUDIO STORE</div>
+      <div class="footer-brand">PLANET VINYL AUDIO STORE</div>
       <div>Jl. Kemang Raya No. 45, Jakarta Selatan &bull; Buka Selasa - Minggu (10.00 - 20.00 WIB)</div>
-      <div>&copy; 2025 Nada Klasik. Simulasi Pemesanan &amp; Pembayaran QRIS Perangkat Audio Retro.</div>
+      <div>&copy; 2025 Planet Vinyl. Simulasi Pemesanan &amp; Pembayaran QRIS Perangkat Audio Retro.</div>
     </div>
   </footer>
 
@@ -36,7 +36,44 @@
   <script>
     (function () {
       const store = window.NKStore;
+
+      function applyPlanetVinylBrand() {
+        const topbar = document.getElementById("site-topbar");
+        if (!topbar) return;
+
+        const brand = topbar.querySelector(".brand");
+        if (brand) {
+          brand.querySelectorAll("svg, img, .brand-mark, .brand-icon").forEach(function (el) {
+            el.remove();
+          });
+          const logoImg = document.createElement("img");
+          logoImg.src = "logo/Planet Vinyl.png";
+          logoImg.alt = "Logo Planet Vinyl";
+          logoImg.className = "brand-logo";
+          logoImg.width = 52;
+          logoImg.height = 52;
+          brand.insertBefore(logoImg, brand.firstChild);
+        }
+
+        const brandTitle = topbar.querySelector(".brand-title");
+        if (brandTitle) brandTitle.textContent = "PLANET VINYL";
+
+        const brandSub = topbar.querySelector(".brand-subtitle");
+        if (brandSub) {
+          brandSub.textContent = brandSub.textContent.replace(/nada klasik/gi, "Planet Vinyl");
+        }
+
+        const drawerTitle = topbar.querySelector(".drawer-title");
+        if (drawerTitle) drawerTitle.textContent = "PLANET VINYL";
+
+        const drawerFoot = topbar.querySelector(".drawer-foot");
+        if (drawerFoot) {
+          drawerFoot.innerHTML = drawerFoot.innerHTML.replace(/nada klasik/gi, "Planet Vinyl");
+        }
+      }
+
       store.renderTopbar("history");
+      applyPlanetVinylBrand();
 
       const root = document.getElementById("payment-root");
       const params = new URLSearchParams(window.location.search);
@@ -149,7 +186,7 @@
           '    <div class="qris-frame">' +
           '      <div class="qris-header">' +
           '        <span class="qris-logo">QRIS</span>' +
-          '        <span>NADA KLASIK AUDIO</span>' +
+          '        <span>PLANET VINYL AUDIO</span>' +
           '      </div>' +
           '      ' + qrisSvg +
           '      <div class="qris-nmid">NMID: ID1025000984120 &bull; Ref: ' + store.escapeHtml(order.qrisRef) + '</div>' +
@@ -173,6 +210,7 @@
 
       store.onRealtimeUpdate(function () {
         renderPayment(false);
+        applyPlanetVinylBrand();
       });
 
       setInterval(function () {

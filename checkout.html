@@ -3,32 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout Pesanan — NADA KLASIK</title>
+  <title>Checkout Pesanan — PLANET VINYL</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <div id="site-topbar"></div>
 
-  <section class="hero compact">
-    <div class="hero-box">
-      <div class="hero-text">
-        <span class="hero-step-tag">Langkah 2 dari 3</span>
-        <h1>Checkout Pesanan</h1>
-        <p>Lengkapi alamat pengiriman dan detail penerima sebelum melanjutkan ke pembayaran instan QRIS.</p>
+  <main class="page-container" style="margin-top: 1.5rem;">
+    <div class="checkout-topbar-strip">
+      <div class="checkout-heading-group">
+        <h1>Checkout (<span id="checkout-item-count">0</span> item)</h1>
+        <p>Lengkapi data pengiriman di kiri, lalu tinjau produk &amp; ringkasan pesanan di kanan.</p>
+      </div>
+      <div class="checkout-progress" aria-label="Tahapan Checkout">
+        <a href="cart.html" class="progress-step done">1. Keranjang</a>
+        <span class="progress-sep">&rsaquo;</span>
+        <span class="progress-step active">2. Pengiriman &amp; Bayar</span>
+        <span class="progress-sep">&rsaquo;</span>
+        <span class="progress-step">3. QRIS &amp; Selesai</span>
       </div>
     </div>
-  </section>
 
-  <main class="page-container">
     <div id="checkout-root"></div>
   </main>
 
   <footer>
     <div class="footer-inner">
-      <div class="footer-brand">NADA KLASIK AUDIO STORE</div>
+      <div class="footer-brand">PLANET VINYL AUDIO STORE</div>
       <div>Jl. Kemang Raya No. 45, Jakarta Selatan &bull; Buka Selasa - Minggu (10.00 - 20.00 WIB)</div>
-      <div>&copy; 2025 Nada Klasik. Simulasi Pemesanan &amp; Pembayaran QRIS Perangkat Audio Retro.</div>
+      <div>&copy; 2025 Planet Vinyl. Simulasi Pemesanan &amp; Pembayaran QRIS Perangkat Audio Retro.</div>
     </div>
   </footer>
 
@@ -36,18 +40,84 @@
   <script>
     (function () {
       const store = window.NKStore;
+
+      function applyPlanetVinylBrand() {
+        const topbar = document.getElementById("site-topbar");
+        if (!topbar) return;
+
+        const brand = topbar.querySelector(".brand");
+        if (brand) {
+          brand.querySelectorAll("svg, img, .brand-mark, .brand-icon").forEach(function (el) {
+            el.remove();
+          });
+          const logoImg = document.createElement("img");
+          logoImg.src = "logo/Planet Vinyl.png";
+          logoImg.alt = "Logo Planet Vinyl";
+          logoImg.className = "brand-logo";
+          logoImg.width = 52;
+          logoImg.height = 52;
+          brand.insertBefore(logoImg, brand.firstChild);
+        }
+
+        const brandTitle = topbar.querySelector(".brand-title");
+        if (brandTitle) brandTitle.textContent = "PLANET VINYL";
+
+        const brandSub = topbar.querySelector(".brand-subtitle");
+        if (brandSub) {
+          brandSub.textContent = brandSub.textContent.replace(/nada klasik/gi, "Planet Vinyl");
+        }
+
+        const drawerTitle = topbar.querySelector(".drawer-title");
+        if (drawerTitle) drawerTitle.textContent = "PLANET VINYL";
+
+        const drawerFoot = topbar.querySelector(".drawer-foot");
+        if (drawerFoot) {
+          drawerFoot.innerHTML = drawerFoot.innerHTML.replace(/nada klasik/gi, "Planet Vinyl");
+        }
+      }
+
       store.renderTopbar("cart");
+      applyPlanetVinylBrand();
 
       const root = document.getElementById("checkout-root");
+      const itemCountEl = document.getElementById("checkout-item-count");
       let shippingMethod = "courier";
+
+      const courierIconSvg =
+        '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+        '  <rect x="5" y="15" width="35" height="29" rx="3" fill="#E5A93B" stroke="#2B1B12" stroke-width="2.5"/>' +
+        '  <path d="M5 23H40M15 15V44M30 15V44" stroke="#2B1B12" stroke-width="1.8"/>' +
+        '  <circle cx="22.5" cy="33.5" r="5.5" fill="#2B1B12"/>' +
+        '  <circle cx="22.5" cy="33.5" r="2" fill="#FFF9EE"/>' +
+        '  <path d="M40 23H51L59 32V44H40V23Z" fill="#D45B27" stroke="#2B1B12" stroke-width="2.5" stroke-linejoin="round"/>' +
+        '  <rect x="44" y="27" width="9" height="7" rx="1.5" fill="#FFF9EE" stroke="#2B1B12" stroke-width="1.8"/>' +
+        '  <circle cx="17" cy="46" r="6" fill="#2B1B12"/><circle cx="17" cy="46" r="2.4" fill="#F6ECD9"/>' +
+        '  <circle cx="49" cy="46" r="6" fill="#2B1B12"/><circle cx="49" cy="46" r="2.4" fill="#F6ECD9"/>' +
+        '</svg>';
+
+      const pickupIconSvg =
+        '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+        '  <path d="M9 24L13 12H51L55 24H9Z" fill="#D45B27" stroke="#2B1B12" stroke-width="2.5" stroke-linejoin="round"/>' +
+        '  <path d="M9 24C9 27.3 11.7 30 15 30C18.3 30 21 27.3 21 24C21 27.3 23.7 30 27 30C30.3 30 33 27.3 33 24C33 27.3 35.7 30 39 30C42.3 30 45 27.3 45 24C45 27.3 47.7 30 51 30C53.2 30 55 28 55 24" fill="#E5A93B" stroke="#2B1B12" stroke-width="2.2"/>' +
+        '  <rect x="12" y="29" width="40" height="23" fill="#FFF9EE" stroke="#2B1B12" stroke-width="2.5"/>' +
+        '  <rect x="16" y="34" width="13" height="11" rx="1.5" fill="#F6ECD9" stroke="#2B1B12" stroke-width="1.8"/>' +
+        '  <circle cx="22.5" cy="39.5" r="3.5" fill="#2B1B12"/>' +
+        '  <circle cx="22.5" cy="39.5" r="1.2" fill="#E5A93B"/>' +
+        '  <rect x="34" y="35" width="13" height="17" fill="#5F6F3A" stroke="#2B1B12" stroke-width="2"/>' +
+        '  <circle cx="44" cy="43.5" r="1.5" fill="#E5A93B"/>' +
+        '  <path d="M7 52H57" stroke="#2B1B12" stroke-width="3" stroke-linecap="round"/>' +
+        '</svg>';
 
       function renderCheckout() {
         const cart = store.getCart();
+        const totalQty = store.getCartCount();
+        if (itemCountEl) itemCountEl.textContent = String(totalQty);
+
         if (cart.length === 0) {
           root.innerHTML =
             '<div class="panel empty-state">' +
             '  <h3>Tidak ada unit untuk di-checkout</h3>' +
-            '  <p>Keranjang belanja Anda kosong. Silakan pilih perangkat audio retro di katalog terlebih dahulu.</p>' +
+            '  <p>Keranjang belanja Anda kosong. Silakan pilih perangkat audio retro di katalog Planet Vinyl terlebih dahulu.</p>' +
             '  <a href="index.html" class="btn btn-primary">Buka Katalog</a>' +
             '</div>';
           return;
@@ -56,88 +126,166 @@
         const ongkir = shippingMethod === "pickup" ? 0 : store.DEFAULT_COURIER_FEE;
         const totals = store.getCartTotals(ongkir);
 
-        const summaryItemsHtml = cart.map(function (item) {
+        const reviewItemsHtml = cart.map(function (item) {
           return (
-            '<div class="summary-row" style="align-items:flex-start; gap:0.75rem;">' +
-            '  <span>' + store.escapeHtml(item.name) + ' <small style="font-family:\'Courier New\',monospace;">&times;' + item.qty + '</small></span>' +
-            '  <strong style="white-space:nowrap;">' + store.formatRupiah(item.priceNum * item.qty) + '</strong>' +
+            '<div class="checkout-review-item">' +
+            '  <img class="checkout-review-thumb" src="' + store.escapeHtml(item.image) + '" alt="' + store.escapeHtml(item.name) + '">' +
+            '  <div class="checkout-review-info">' +
+            '    <div class="checkout-review-title">' + store.escapeHtml(item.name) + '</div>' +
+            '    <div class="checkout-review-meta">' + store.escapeHtml(item.sku) + ' &bull; Era ' + store.escapeHtml(item.era) + ' &bull; ' + store.escapeHtml(item.condition) + '</div>' +
+            '    <div class="checkout-review-qty">Qty: <strong>' + item.qty + '</strong> &times; ' + store.formatRupiah(item.priceNum) + '</div>' +
+            '  </div>' +
+            '  <div class="checkout-review-price">' + store.formatRupiah(item.priceNum * item.qty) + '</div>' +
             '</div>'
           );
         }).join("");
 
         root.innerHTML =
-          '<form id="checkout-form" class="two-col">' +
-          '  <section class="panel">' +
-          '    <div class="panel-title"><span>Data Penerima &amp; Pengiriman</span></div>' +
-          '    <div class="form-row">' +
-          '      <div class="form-group">' +
-          '        <label for="nama">Nama Lengkap *</label>' +
-          '        <input type="text" id="nama" name="nama" class="form-control" placeholder="Contoh: Raka Pratama" required>' +
+          '<form id="checkout-form" class="checkout-layout">' +
+          '  <!-- KOLOM KIRI: Alamat, Opsi Pengiriman, Metode Bayar -->' +
+          '  <div class="checkout-steps">' +
+          '    <section class="panel checkout-step-card">' +
+          '      <div class="checkout-step-header">' +
+          '        <span class="step-num">1</span>' +
+          '        <div>' +
+          '          <h2>Alamat Pengiriman</h2>' +
+          '          <p>Pastikan nama penerima dan alamat tujuan sesuai.</p>' +
+          '        </div>' +
           '      </div>' +
-          '      <div class="form-group">' +
-          '        <label for="telepon">No. WhatsApp / Telepon *</label>' +
-          '        <input type="tel" id="telepon" name="telepon" class="form-control" placeholder="0812-xxxx-xxxx" required>' +
+          '      <div class="form-row">' +
+          '        <div class="form-group">' +
+          '          <label for="nama">Nama Lengkap Penerima *</label>' +
+          '          <input type="text" id="nama" name="nama" class="form-control" placeholder="Contoh: Raka Pratama" required>' +
+          '        </div>' +
+          '        <div class="form-group">' +
+          '          <label for="telepon">No. WhatsApp / Telepon *</label>' +
+          '          <input type="tel" id="telepon" name="telepon" class="form-control" placeholder="0812-xxxx-xxxx" required>' +
+          '        </div>' +
           '      </div>' +
-          '    </div>' +
-          '    <div class="form-row">' +
           '      <div class="form-group">' +
           '        <label for="kota">Kota / Kabupaten *</label>' +
           '        <input type="text" id="kota" name="kota" class="form-control" placeholder="Contoh: Jakarta Selatan" required>' +
           '      </div>' +
-          '      <div class="form-group">' +
-          '        <label for="shipping">Metode Pengiriman</label>' +
-          '        <select id="shipping" name="shipping" class="form-control">' +
-          '          <option value="courier" ' + (shippingMethod === "courier" ? "selected" : "") + '>Kurir Khusus Audio &amp; Packing Kayu (Rp 150.000)</option>' +
-          '          <option value="pickup" ' + (shippingMethod === "pickup" ? "selected" : "") + '>Ambil di Toko Kemang, Jaksel (Gratis)</option>' +
-          '        </select>' +
+          '      <div class="form-group" style="margin-bottom:0;">' +
+          '        <label for="alamat">Alamat Lengkap *</label>' +
+          '        <textarea id="alamat" name="alamat" rows="2" class="form-control" placeholder="Nama jalan, nomor rumah, RT/RW, kecamatan, kode pos" required></textarea>' +
           '      </div>' +
-          '    </div>' +
-          '    <div class="form-group">' +
-          '      <label for="alamat">Alamat Lengkap *</label>' +
-          '      <textarea id="alamat" name="alamat" rows="3" class="form-control" placeholder="Nama jalan, nomor rumah, RT/RW, kode pos" required></textarea>' +
-          '    </div>' +
-          '    <div class="form-group">' +
-          '      <label for="catatan">Catatan Teknis / Pengiriman (Opsional)</label>' +
-          '      <input type="text" id="catatan" name="catatan" class="form-control" placeholder="Contoh: Sertakan kartu garansi servis &amp; step-down 110V">' +
-          '    </div>' +
-          '    <div class="panel-title" style="margin-top:1.5rem;"><span>Metode Pembayaran</span></div>' +
-          '    <div class="payment-option">' +
-          '      <div>' +
-          '        <div class="payment-option-title">QRIS (Pembayaran Instan)</div>' +
-          '        <div class="payment-option-desc">Scan kode QRIS melalui mobile banking atau e-wallet. Verifikasi lunas tersinkronisasi secara realtime.</div>' +
+          '    </section>' +
+
+          '    <section class="panel checkout-step-card">' +
+          '      <div class="checkout-step-header">' +
+          '        <span class="step-num">2</span>' +
+          '        <div>' +
+          '          <h2>Opsi Pengiriman &amp; Penanganan</h2>' +
+          '          <p>Pilih metode pengiriman yang paling sesuai untuk perangkat audio Anda.</p>' +
+          '        </div>' +
           '      </div>' +
-          '      <span class="status-badge status-paid">Aktif</span>' +
-          '    </div>' +
-          '  </section>' +
-          '  <aside class="panel">' +
-          '    <div class="panel-title"><span>Ringkasan Pesanan</span></div>' +
-          '    ' + summaryItemsHtml +
-          '    <hr class="summary-divider">' +
-          '    <div class="summary-row">' +
-          '      <span>Subtotal</span>' +
-          '      <strong id="co-subtotal">' + store.formatRupiah(totals.subtotal) + '</strong>' +
-          '    </div>' +
-          '    <div class="summary-row">' +
-          '      <span>Ongkos Kirim</span>' +
-          '      <strong id="co-ongkir">' + (totals.ongkir === 0 ? "Gratis" : store.formatRupiah(totals.ongkir)) + '</strong>' +
-          '    </div>' +
-          '    <hr class="summary-divider">' +
-          '    <div class="summary-total">' +
-          '      <span>Grand Total</span>' +
-          '      <span id="co-grandtotal">' + store.formatRupiah(totals.grandTotal) + '</span>' +
-          '    </div>' +
-          '    <button type="submit" class="btn btn-primary btn-block">Buat Pesanan &amp; Bayar QRIS &rarr;</button>' +
-          '    <a href="cart.html" class="btn btn-outline btn-block" style="margin-top:0.65rem;">&larr; Kembali ke Keranjang</a>' +
+          '      <div class="shipping-radio-list">' +
+          '        <label class="shipping-radio-card ' + (shippingMethod === "courier" ? "selected" : "") + '">' +
+          '          <div class="shipping-radio-top">' +
+          '            <div class="shipping-radio-left">' +
+          '              <input type="radio" name="shipping" value="courier" ' + (shippingMethod === "courier" ? "checked" : "") + '>' +
+          '              <div class="shipping-radio-visual">' + courierIconSvg + '</div>' +
+          '            </div>' +
+          '            <span class="shipping-radio-price">' + store.formatRupiah(store.DEFAULT_COURIER_FEE) + '</span>' +
+          '          </div>' +
+          '          <div class="shipping-radio-body">' +
+          '            <div class="shipping-radio-title">Kurir Khusus Audio &amp; Packing Kayu</div>' +
+          '            <div class="shipping-radio-desc">Estimasi tiba 1-3 hari kerja &bull; Perlindungan ekstra busa &amp; peti kayu</div>' +
+          '          </div>' +
+          '        </label>' +
+          '        <label class="shipping-radio-card ' + (shippingMethod === "pickup" ? "selected" : "") + '">' +
+          '          <div class="shipping-radio-top">' +
+          '            <div class="shipping-radio-left">' +
+          '              <input type="radio" name="shipping" value="pickup" ' + (shippingMethod === "pickup" ? "checked" : "") + '>' +
+          '              <div class="shipping-radio-visual">' + pickupIconSvg + '</div>' +
+          '            </div>' +
+          '            <span class="shipping-radio-price">Gratis</span>' +
+          '          </div>' +
+          '          <div class="shipping-radio-body">' +
+          '            <div class="shipping-radio-title">Ambil Langsung di Toko (Kemang)</div>' +
+          '            <div class="shipping-radio-desc">Selasa - Minggu (10.00 - 20.00 WIB) &bull; Bisa tes suara di tempat</div>' +
+          '          </div>' +
+          '        </label>' +
+          '      </div>' +
+          '      <div class="form-group" style="margin-top:0.9rem; margin-bottom:0;">' +
+          '        <label for="catatan">Catatan Teknis / Pengiriman (Opsional)</label>' +
+          '        <input type="text" id="catatan" name="catatan" class="form-control" placeholder="Contoh: Sertakan kartu garansi servis &amp; step-down 110V">' +
+          '      </div>' +
+          '    </section>' +
+
+          '    <section class="panel checkout-step-card">' +
+          '      <div class="checkout-step-header">' +
+          '        <span class="step-num">3</span>' +
+          '        <div>' +
+          '          <h2>Metode Pembayaran</h2>' +
+          '          <p>Transaksi aman dengan verifikasi instan.</p>' +
+          '        </div>' +
+          '      </div>' +
+          '      <div class="payment-option">' +
+          '        <div>' +
+          '          <div class="payment-option-title">QRIS (Pembayaran Instan)</div>' +
+          '          <div class="payment-option-desc">Scan kode QRIS melalui mobile banking atau e-wallet. Verifikasi lunas tersinkronisasi secara realtime.</div>' +
+          '        </div>' +
+          '        <span class="status-badge status-paid">Aktif</span>' +
+          '      </div>' +
+          '    </section>' +
+          '  </div>' +
+
+          '  <!-- KOLOM KANAN: Gambar Produk (Tinjau Item) + Ringkasan Pesanan -->' +
+          '  <aside class="checkout-right-col">' +
+          '    <section class="panel checkout-step-card">' +
+          '      <div class="checkout-step-header">' +
+          '        <span class="step-num">4</span>' +
+          '        <div>' +
+          '          <h2>Tinjau Produk (' + totalQty + ' unit)</h2>' +
+          '          <p>Daftar unit audio yang akan diproses.</p>' +
+          '        </div>' +
+          '      </div>' +
+          '      <div class="checkout-review-list">' + reviewItemsHtml + '</div>' +
+          '    </section>' +
+
+          '    <section class="panel checkout-sticky-summary">' +
+          '      <div class="panel-title" style="border-bottom:none; padding-bottom:0; margin-bottom:0.75rem; font-size:1.05rem;"><span>Ringkasan Pesanan</span></div>' +
+          '      <div class="summary-row">' +
+          '        <span>Barang (' + totalQty + ' unit):</span>' +
+          '        <strong id="co-subtotal">' + store.formatRupiah(totals.subtotal) + '</strong>' +
+          '      </div>' +
+          '      <div class="summary-row">' +
+          '        <span>Ongkos Kirim &amp; Packing:</span>' +
+          '        <strong id="co-ongkir">' + (totals.ongkir === 0 ? "Gratis" : store.formatRupiah(totals.ongkir)) + '</strong>' +
+          '      </div>' +
+          '      <div class="summary-row">' +
+          '        <span>Garansi Servis 6 Bulan:</span>' +
+          '        <strong style="color:var(--accent-teal);">Gratis</strong>' +
+          '      </div>' +
+          '      <hr class="summary-divider">' +
+          '      <div class="summary-total" style="margin-bottom:0.95rem;">' +
+          '        <span>Total Pesanan:</span>' +
+          '        <span id="co-grandtotal">' + store.formatRupiah(totals.grandTotal) + '</span>' +
+          '      </div>' +
+          '      <button type="submit" class="btn btn-gold btn-block checkout-cta-btn">Buat Pesanan &amp; Bayar QRIS &rarr;</button>' +
+          '      <p class="checkout-terms">Dengan menekan tombol di atas, Anda menyetujui ketentuan garansi servis analog 6 bulan dari Planet Vinyl.</p>' +
+          '      <a href="cart.html" class="btn btn-outline btn-block btn-sm" style="margin-top:0.75rem;">&larr; Ubah Keranjang</a>' +
+          '    </section>' +
           '  </aside>' +
           '</form>';
 
-        const shippingSelect = document.getElementById("shipping");
-        shippingSelect.addEventListener("change", function () {
-          shippingMethod = shippingSelect.value;
-          const newOngkir = shippingMethod === "pickup" ? 0 : store.DEFAULT_COURIER_FEE;
-          const t = store.getCartTotals(newOngkir);
-          document.getElementById("co-ongkir").textContent = t.ongkir === 0 ? "Gratis" : store.formatRupiah(t.ongkir);
-          document.getElementById("co-grandtotal").textContent = store.formatRupiah(t.grandTotal);
+        const shippingRadios = root.querySelectorAll('input[name="shipping"]');
+        shippingRadios.forEach(function (radio) {
+          radio.addEventListener("change", function () {
+            shippingMethod = radio.value;
+            root.querySelectorAll(".shipping-radio-card").forEach(function (card) {
+              card.classList.remove("selected");
+            });
+            const parentCard = radio.closest(".shipping-radio-card");
+            if (parentCard) parentCard.classList.add("selected");
+
+            const newOngkir = shippingMethod === "pickup" ? 0 : store.DEFAULT_COURIER_FEE;
+            const t = store.getCartTotals(newOngkir);
+            document.getElementById("co-ongkir").textContent = t.ongkir === 0 ? "Gratis" : store.formatRupiah(t.ongkir);
+            document.getElementById("co-grandtotal").textContent = store.formatRupiah(t.grandTotal);
+          });
         });
 
         const form = document.getElementById("checkout-form");
@@ -156,6 +304,11 @@
           }
         });
       }
+
+      store.onRealtimeUpdate(function () {
+        renderCheckout();
+        applyPlanetVinylBrand();
+      });
 
       renderCheckout();
     })();
