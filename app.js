@@ -712,43 +712,106 @@
     );
   }
 
-  // Shared Header / Topbar (Mempertahankan logo piringan hitam Nada Klasik)
+  // Shared Header / Topbar + Side Drawer (Estetika 1970-an)
   function renderTopbar(activePage) {
     const holder = document.getElementById("site-topbar");
     if (!holder) return;
 
     const count = getCartCount();
     holder.innerHTML =
+      '<div class="groovy-stripe" aria-hidden="true">' +
+      '  <span></span><span></span><span></span><span></span>' +
+      '</div>' +
       '<header class="site-header">' +
       '  <div class="header-container">' +
       '    <a href="index.html" class="brand">' +
-      '      <svg width="44" height="44" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-      '        <circle cx="32" cy="32" r="30" fill="#111111" stroke="#E09F3E" stroke-width="2"/>' +
-      '        <circle cx="32" cy="32" r="22" stroke="#333333" stroke-width="1.5"/>' +
-      '        <circle cx="32" cy="32" r="16" stroke="#333333" stroke-width="1.5"/>' +
-      '        <circle cx="32" cy="32" r="10" fill="#D95D39"/>' +
-      '        <circle cx="32" cy="32" r="3" fill="#F4EFE6"/>' +
+      '      <svg width="46" height="46" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '        <circle cx="32" cy="32" r="30" fill="#1C120C" stroke="#E5A93B" stroke-width="2.5"/>' +
+      '        <circle cx="32" cy="32" r="22" stroke="#4A3222" stroke-width="1.5"/>' +
+      '        <circle cx="32" cy="32" r="16" stroke="#4A3222" stroke-width="1.5"/>' +
+      '        <circle cx="32" cy="32" r="10" fill="#D45B27"/>' +
+      '        <circle cx="32" cy="32" r="3" fill="#F6ECD9"/>' +
       '      </svg>' +
       '      <div>' +
       '        <div class="brand-title">Nada Klasik</div>' +
       '        <div class="brand-subtitle">TOKO PERANGKAT AUDIO RETRO &amp; ANALOG</div>' +
       '      </div>' +
       '    </a>' +
-      '    <nav class="topbar-nav" aria-label="Navigasi Utama">' +
-      '      <a href="index.html" class="nav-link ' + (activePage === "katalog" ? "active" : "") + '">Katalog</a>' +
-      '      <a href="cart.html" class="nav-link ' + (activePage === "cart" ? "active" : "") + '">Keranjang <span class="cart-badge" id="nav-cart-count">' + count + '</span></a>' +
-      '      <a href="history.html" class="nav-link ' + (activePage === "history" ? "active" : "") + '">Riwayat</a>' +
-      '      <a href="qris-approve.html" target="_blank" rel="noopener" class="nav-link sim-link" title="Buka halaman simulator approval QRIS di tab baru">Simulator QRIS &#8599;</a>' +
-      '    </nav>' +
+      '    <button type="button" class="drawer-toggle" id="nk-drawer-toggle" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="nk-side-drawer">' +
+      '      <span class="drawer-hamburger" aria-hidden="true"><span></span><span></span><span></span></span>' +
+      '      <span>Menu</span>' +
+      '      <span class="cart-badge" id="nav-cart-count">' + count + '</span>' +
+      '    </button>' +
       '  </div>' +
-      '</header>';
+      '</header>' +
+      '<div class="drawer-backdrop" id="nk-drawer-backdrop" hidden></div>' +
+      '<aside class="side-drawer" id="nk-side-drawer" aria-label="Navigasi Utama" aria-hidden="true">' +
+      '  <div class="drawer-head">' +
+      '    <div>' +
+      '      <div class="drawer-kicker">HI-FI STEREO &bull; EST. 1974</div>' +
+      '      <div class="drawer-title">Navigasi Toko</div>' +
+      '    </div>' +
+      '    <button type="button" class="drawer-close" id="nk-drawer-close" aria-label="Tutup menu">&times;</button>' +
+      '  </div>' +
+      '  <div class="groovy-stripe slim" aria-hidden="true">' +
+      '    <span></span><span></span><span></span><span></span>' +
+      '  </div>' +
+      '  <nav class="drawer-nav">' +
+      '    <a href="index.html" class="drawer-link ' + (activePage === "katalog" ? "active" : "") + '">' +
+      '      <span class="drawer-num">01</span>' +
+      '      <span>Katalog</span>' +
+      '    </a>' +
+      '    <a href="cart.html" class="drawer-link ' + (activePage === "cart" ? "active" : "") + '">' +
+      '      <span class="drawer-num">02</span>' +
+      '      <span>Keranjang</span>' +
+      '      <span class="cart-badge" id="drawer-cart-count">' + count + '</span>' +
+      '    </a>' +
+      '    <a href="history.html" class="drawer-link ' + (activePage === "history" ? "active" : "") + '">' +
+      '      <span class="drawer-num">03</span>' +
+      '      <span>Riwayat</span>' +
+      '    </a>' +
+      '    <a href="qris-approve.html" target="_blank" rel="noopener" class="drawer-link sim-link" title="Buka halaman simulator approval QRIS di tab baru">' +
+      '      <span class="drawer-num">04</span>' +
+      '      <span>Simulator QRIS &#8599;</span>' +
+      '    </a>' +
+      '  </nav>' +
+      '  <div class="drawer-foot">' +
+      '    <div>KEMANG RAYA NO. 45 &bull; JKT</div>' +
+      '    <div>GARANSI SERVIS ANALOG 6 BULAN</div>' +
+      '  </div>' +
+      '</aside>';
+
+    const toggleBtn = document.getElementById("nk-drawer-toggle");
+    const closeBtn = document.getElementById("nk-drawer-close");
+    const backdrop = document.getElementById("nk-drawer-backdrop");
+    const drawer = document.getElementById("nk-side-drawer");
+
+    function setDrawerOpen(open) {
+      if (!drawer || !backdrop || !toggleBtn) return;
+      drawer.classList.toggle("open", open);
+      backdrop.classList.toggle("open", open);
+      backdrop.hidden = !open;
+      toggleBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      drawer.setAttribute("aria-hidden", open ? "false" : "true");
+      document.body.classList.toggle("drawer-open", open);
+    }
+
+    if (toggleBtn) toggleBtn.addEventListener("click", function () { setDrawerOpen(true); });
+    if (closeBtn) closeBtn.addEventListener("click", function () { setDrawerOpen(false); });
+    if (backdrop) backdrop.addEventListener("click", function () { setDrawerOpen(false); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && drawer && drawer.classList.contains("open")) {
+        setDrawerOpen(false);
+      }
+    });
   }
 
   function updateNavBadge() {
+    const val = String(getCartCount());
     const badge = document.getElementById("nav-cart-count");
-    if (badge) {
-      badge.textContent = String(getCartCount());
-    }
+    const drawerBadge = document.getElementById("drawer-cart-count");
+    if (badge) badge.textContent = val;
+    if (drawerBadge) drawerBadge.textContent = val;
   }
 
   // Toast helper
