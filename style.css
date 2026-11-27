@@ -90,7 +90,7 @@ header.site-header {
   color: var(--bg-cream);
   border-bottom: 5px solid var(--accent-orange);
   box-shadow: 0 4px 0 var(--accent-gold);
-  padding: 0.9rem 1.5rem;
+  padding: 0.35rem 1.5rem;
   position: sticky;
   top: 0;
   z-index: 50;
@@ -112,13 +112,20 @@ header.site-header {
 }
 
 .brand-logo {
-  width: 52px;
-  height: 52px;
-  max-width: 52px;
-  max-height: 52px;
+  height: 76px;
+  width: 76px;
+  max-width: none;
+  max-height: none;
   object-fit: contain;
   display: block;
   flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .brand-logo {
+    height: 58px;
+    width: 58px;
+  }
 }
 
 .brand-title {
